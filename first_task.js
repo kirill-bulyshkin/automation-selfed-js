@@ -26,7 +26,7 @@ const {Builder, By, Key, until} = require('selenium-webdriver');
         await boldTextButton.click();
     }
     finally{
-        driver.uff();
+        driver.quit();
     }
 })();
 
