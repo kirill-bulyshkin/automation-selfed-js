@@ -2,14 +2,16 @@
   "name": "first_task",
   "version": "1.0.0",
   "description": "JS Automation using Selenium WebDriver",
-  "main": "first_task.js",
+  "main": "test.js",
   "dependencies": {
+    "chai": "^4.3.4",
     "lodash": "^4.17.21",
+    "mocha": "^9.0.1",
     "selenium-webdriver": "^4.0.0-beta.4"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --timeout 100000"
   },
   "author": "Kirill Bulyshkin",
   "license": "ISC"
