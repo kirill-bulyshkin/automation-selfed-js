@@ -11,10 +11,6 @@ class Browser {
     async navigate(url) {
         await this.driver.get(url)
     }
-
-    // async switchToFrameById(id) {
-    //     await this.driver.switchTo().frame(this.driver.findElement(By.id(id)));
-    // }
 }
 
 module.exports = Browser;

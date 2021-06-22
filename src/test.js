@@ -5,7 +5,11 @@ const upperBound = 35;
 const base = 36;
 const randomString = lodash.times(iterationsNumber, () => lodash.random(upperBound).toString(base)).join('');
 const randomText = `You can see random text here now ${randomString} !!!`;
+
+const link = 'http://the-internet.herokuapp.com/iframe';
+const titleText = 'An iFrame containing the TinyMCE WYSIWYG Editor';
 const boldText = '700';
+
 const {expect} = require('chai');
 const Browser = require('./browser');
 const FramePage = require('./iframe.page');
@@ -19,7 +23,7 @@ let page
 beforeEach(async () => {
    const browser = new Browser()
    await browser.init('chrome')
-   await browser.navigate('http://the-internet.herokuapp.com/iframe')
+   await browser.navigate(link)
    driver = browser.driver
    page = new FramePage(browser)
 })
@@ -27,13 +31,10 @@ beforeEach(async () => {
 it('First Test', async () => {
     //Assert that text on the page is valid
     const title = await page.title;
-    expect(await title.getText()).to.be.deep.equal('An iFrame containing the TinyMCE WYSIWYG Editor');
+    expect(await title.getText()).to.be.deep.equal(titleText);
 
     // Switch to iframe element
-    await driver.switchTo().frame(driver.findElement(By.id('mce_0_ifr')));
-
-    // with class
-    // await driver.switchToFrameById('mce_0_ifr');
+    await page.goToFrame;
     
     //Enter new random text
     const editableField = await page.editableField;
@@ -48,15 +49,15 @@ it('First Test', async () => {
     await editableField.sendKeys(Key.CONTROL + "a");
 
     //Back to main frame
-    await driver.switchTo().defaultContent();
+    await page.backFromFrame;
 
     //Press the 'B' button
-    const boldTextButton = await driver.findElement(By.xpath("//button[@title='Bold']"));
+    const boldTextButton = await page.boldTextButton;
     await boldTextButton.click();
 
     //Assert that inputted text is bold
-    await driver.switchTo().frame(driver.findElement(By.id('mce_0_ifr')));
-    const fontWeight = await driver.findElement(By.css('strong')).getCssValue('font-weight');
+    await page.goToFrame;
+    const fontWeight = await page.fontWeight;
     expect(await fontWeight).to.be.deep.equal(boldText);
 })
 
