@@ -3,12 +3,15 @@ const lodash = require('lodash');
 const iterationsNumber = 20;
 const upperBound = 35;
 const base = 36;
-const randomString= lodash.times(iterationsNumber, () => lodash.random(upperBound).toString(base)).join('');
+const randomString = lodash.times(iterationsNumber, () => lodash.random(upperBound).toString(base)).join('');
 const randomText = `You can see random text here now ${randomString} !!!`;
+const boldText = '700';
 const {expect} = require('chai');
+const Browser = require('./browser');
+const FramePage = require('./iframe.page');
 
 //Selenium connection
-const {Builder, By, Key} = require('selenium-webdriver');
+const {By, Key} = require('selenium-webdriver');
 
 let driver
 let page
@@ -32,12 +35,11 @@ it('First Test', async () => {
     // with class
     // await driver.switchToFrameById('mce_0_ifr');
     
-    //Deleting existing text + enter new random text
+    //Enter new random text
     const editableField = await page.editableField;
     await editableField.sendKeys(Key.CONTROL + "a");
-    await editableField.sendKeys(Key.BACK_SPACE);
     await editableField.sendKeys(randomText);
-
+    
     //Assert that inputted text is displayed and valid
     expect(await editableField.getText()).to.be.deep.equal(randomText);
     expect(await editableField.isDisplayed()).to.be.deep.equal(true); 
@@ -54,40 +56,10 @@ it('First Test', async () => {
 
     //Assert that inputted text is bold
     await driver.switchTo().frame(driver.findElement(By.id('mce_0_ifr')));
-    const boldFontWeight = await driver.findElement(By.css('strong')).getCssValue('font-weight');
-    expect(await boldFontWeight).to.be.deep.equal('700');
+    const fontWeight = await driver.findElement(By.css('strong')).getCssValue('font-weight');
+    expect(await fontWeight).to.be.deep.equal(boldText);
 })
 
 afterEach(async () => {
     await driver.quit()
 })
-
-class FramePage {
-    constructor(browser) {
-        this.browser = browser
-    }
-
-    get title() {
-        return this.browser.driver.findElement(By.css('h3'))
-    }
-
-    get editableField() {
-       return this.browser.driver.findElement(By.css('p'))
-    }
-}
-
-class Browser {
-    driver
-
-    async init(name) {
-        this.driver = await new Builder().forBrowser(name).build();
-    }
-
-    async navigate(url) {
-        await this.driver.get(url)
-    }
-
-    // async switchToFrameById(id) {
-    //     await this.driver.switchTo().frame(this.driver.findElement(By.id(id)));
-    // }
-}
