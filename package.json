@@ -11,7 +11,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "mocha --timeout 100000 ./src "
+    "test": "mocha --timeout 100000 ./project "
   },
   "author": "Kirill Bulyshkin",
   "license": "ISC"
