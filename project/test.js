@@ -8,27 +8,24 @@ const boldText = '700';
 
 const {expect} = require('chai');
 const {link} = require('../utils/test.data');
-const Browser = require('./browser');
+const Browser = require('../framework/browser');
 const FramePage = require('./iframe.page');
 
 
 //Selenium connection
 const {By, Key} = require('selenium-webdriver');
 
-let driver;
-let page;
 
 beforeEach(async () => {
-   browser = new Browser();
-   await browser.init('chrome');
-   await browser.navigate(link);
-})
+   browser = new Browser('chrome', link);
+   await browser.init();
+   await browser.navigate();
+});
 
 it('First Test', async () => {
     //Assert that text on the page is valid
     const titleText = 'An iFrame containing the TinyMCE WYSIWYG Editor';
-
-    page = new FramePage(browser);
+    let page = new FramePage(browser);
 
     const title = await page.title;
     expect(await title.getText()).to.be.equal(titleText);
@@ -62,9 +59,8 @@ it('First Test', async () => {
     await browser.goToFrame;
     const fontWeight = page.fontWeight;
     expect(await fontWeight).to.be.equal(boldText);
-})
+});
 
 afterEach(async () => {
-    driver = browser.driver;
-    await driver.quit();
-})
+    await browser.driver.quit();
+});

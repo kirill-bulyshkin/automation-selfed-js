@@ -1,4 +1,3 @@
-//Selenium connection
 const {By} = require('selenium-webdriver');
 
 class FramePage {

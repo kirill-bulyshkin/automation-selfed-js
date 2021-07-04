@@ -2,14 +2,17 @@
 const {Builder, By} = require('selenium-webdriver');
 
 class Browser {
-    driver
-
-    async init(name) {
-        this.driver = await new Builder().forBrowser(name).build();
+    constructor(browserName, url) {
+        this.browserName = browserName;
+        this.url = url;
     }
 
-    async navigate(url) {
-        await this.driver.get(url);
+    async init() {
+        this.driver = await new Builder().forBrowser(this.browserName).build();
+    }
+
+    async navigate() {
+        await this.driver.get(this.url);
     }
 
     get goToFrame() {
