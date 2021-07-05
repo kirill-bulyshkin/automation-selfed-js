@@ -6,11 +6,11 @@ class FramePage {
     }
 
     get title() {
-        return this.browser.driver.findElement(By.css('h3'));
+        return this.browser.driver.findElement(By.xpath('//h3'));
     }
 
     get editableField() {
-       return this.browser.driver.findElement(By.css('p'));
+       return this.browser.driver.findElement(By.xpath('//p'));
     }
 
     get boldTextButton() {
@@ -18,7 +18,7 @@ class FramePage {
     }
 
     get fontWeight() {
-        return this.browser.driver.findElement(By.css('strong')).getCssValue('font-weight');
+        return this.browser.driver.findElement(By.xpath('//strong')).getCssValue('font-weight');
     }
 }
 

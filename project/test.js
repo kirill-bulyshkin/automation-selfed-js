@@ -7,9 +7,10 @@ const boldText = '700';
 
 
 const {expect} = require('chai');
-const {link} = require('../utils/test.data');
+const {testData} = require('../testData/test.data');
 const Browser = require('../framework/browser');
 const FramePage = require('./iframe.page');
+const framePath = "//iframe[@id='mce_0_ifr']";
 
 
 //Selenium connection
@@ -17,12 +18,14 @@ const {By, Key} = require('selenium-webdriver');
 
 
 beforeEach(async () => {
-   browser = new Browser('chrome', link);
+   browser = new Browser('chrome');
    await browser.init();
-   await browser.navigate();
 });
 
 it('First Test', async () => {
+    //Navigate to web-page
+    await browser.navigate(testData.link);
+
     //Assert that text on the page is valid
     const titleText = 'An iFrame containing the TinyMCE WYSIWYG Editor';
     let page = new FramePage(browser);
@@ -31,7 +34,7 @@ it('First Test', async () => {
     expect(await title.getText()).to.be.equal(titleText);
 
     // Switch to iframe element
-    await browser.goToFrame;
+    await browser.goToFrame(framePath);
     
     //Enter new random text
     const randomString = lodash.times(iterationsNumber, () => lodash.random(upperBound).toString(base)).join('');
@@ -49,14 +52,14 @@ it('First Test', async () => {
     await editableField.sendKeys(Key.CONTROL + "a");
 
     //Back to main frame
-    await browser.backFromFrame;
+    await browser.backFromFrame();
 
     //Press the 'B' button
     const boldTextButton = await page.boldTextButton;
     await boldTextButton.click();
 
     //Assert that inputted text is bold
-    await browser.goToFrame;
+    await browser.goToFrame(framePath);
     const fontWeight = page.fontWeight;
     expect(await fontWeight).to.be.equal(boldText);
 });

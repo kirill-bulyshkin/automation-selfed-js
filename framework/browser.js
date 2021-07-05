@@ -2,24 +2,23 @@
 const {Builder, By} = require('selenium-webdriver');
 
 class Browser {
-    constructor(browserName, url) {
+    constructor(browserName) {
         this.browserName = browserName;
-        this.url = url;
     }
 
     async init() {
         this.driver = await new Builder().forBrowser(this.browserName).build();
     }
 
-    async navigate() {
-        await this.driver.get(this.url);
+    async navigate(url) {
+        await this.driver.get(url);
     }
 
-    get goToFrame() {
-        return this.driver.switchTo().frame(this.driver.findElement(By.id('mce_0_ifr')));
+    async goToFrame(framePath) {
+        return this.driver.switchTo().frame(this.driver.findElement(By.xpath(framePath)));
     }
 
-    get backFromFrame() {
+    async backFromFrame() {
         return this.driver.switchTo().defaultContent();
     }
 }
