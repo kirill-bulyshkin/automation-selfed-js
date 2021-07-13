@@ -1,19 +1,7 @@
-//Using lodash library to generate the random stings
-const lodash = require('lodash');
-const iterationsNumber = 20;
-const upperBound = 35;
-const base = 36;
-const boldText = '700';
-
-
 const {expect} = require('chai');
 const {testData} = require('../testData/test.data');
-const Browser = require('../framework/browser');
-const FramePage = require('./iframe.page');
-const framePath = "//iframe[@id='mce_0_ifr']";
-
-
-//Selenium connection
+const Browser = require('../framework/browser/browser');
+const BasePage = require('../basePage/basePage')
 const {By, Key} = require('selenium-webdriver');
 
 
@@ -22,48 +10,48 @@ beforeEach(async () => {
    await browser.init();
 });
 
-it('First Test', async () => {
-    //Navigate to web-page
+it('Second Test Case', async () => {
     await browser.navigate(testData.link);
 
-    //Assert that text on the page is valid
-    const titleText = 'An iFrame containing the TinyMCE WYSIWYG Editor';
-    let page = new FramePage(browser);
+    let page = new BasePage(browser);
 
-    const title = await page.title;
-    expect(await title.getText()).to.be.equal(titleText);
+    expect(await page.welcomePageText).to.include(testData.welcomeText);
 
-    // Switch to iframe element
-    await browser.goToFrame(framePath);
-    
-    //Enter new random text
-    const randomString = lodash.times(iterationsNumber, () => lodash.random(upperBound).toString(base)).join('');
-    const randomText = `You can see random text here now ${randomString} !!!`;
+    const secondPageLink = await page.secondPageLink;
+    await secondPageLink.click();
 
-    const editableField = await page.editableField;
-    await editableField.sendKeys(Key.CONTROL + "a");
-    await editableField.sendKeys(randomText);
-    
-    //Assert that inputted text is displayed and valid
-    expect(await editableField.getText()).to.be.equal(randomText);
-    expect(await editableField.isDisplayed()).to.be.equal(true); 
-    
-    //Highlight the entered random text
-    await editableField.sendKeys(Key.CONTROL + "a");
+    const hideHelpButton = await page.hideHelpButton;
+    await hideHelpButton.click();
 
-    //Back to main frame
-    await browser.backFromFrame();
+    const helpFormClassAttribute = await page.helpFormClassAttribute;
 
-    //Press the 'B' button
-    const boldTextButton = await page.boldTextButton;
-    await boldTextButton.click();
+    expect(helpFormClassAttribute).to.be.equal(testData.hiddenHelpForm);
 
-    //Assert that inputted text is bold
-    await browser.goToFrame(framePath);
-    const fontWeight = page.fontWeight;
-    expect(await fontWeight).to.be.equal(boldText);
 });
+
+it('Third Test Case', async () => {
+    await browser.navigate(testData.link);
+
+    let page = new BasePage(browser);
+
+    expect(await page.welcomePageText).to.include(testData.welcomeText);
+
+    const secondPageLink = await page.secondPageLink;
+    await secondPageLink.click();
+
+    const timeoutValue = 2000; 
+    await browser.setTimeout(timeoutValue);
+
+    const acceptCookiesButton = await page.acceptCookiesButton;
+    await acceptCookiesButton.click();
+
+    const cookiesObject = await page.cookiesObject;
+    
+    expect(await cookiesObject.length).to.be.equal(0);
+});
+
 
 afterEach(async () => {
     await browser.driver.quit();
 });
+

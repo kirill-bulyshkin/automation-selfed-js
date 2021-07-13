@@ -21,6 +21,10 @@ class Browser {
     async backFromFrame() {
         return this.driver.switchTo().defaultContent();
     }
+
+    async setTimeout(timeoutValue) {
+        return this.driver.manage().setTimeouts({implicit: timeoutValue});
+    }
 }
 
 module.exports = Browser;
