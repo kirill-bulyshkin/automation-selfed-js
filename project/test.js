@@ -51,6 +51,20 @@ it('Third Test Case', async () => {
 });
 
 
+it('Fourth Test Case', async () => {
+    await browser.navigate(testData.link);
+
+    let page = new BasePage(browser);
+
+    expect(await page.welcomePageText).to.include(testData.welcomeText);
+
+    const secondPageLink = await page.secondPageLink;
+    await secondPageLink.click();
+    
+    expect(await page.timerValue).to.be.equal(testData.timerStartValue);
+});
+
+
 afterEach(async () => {
     await browser.driver.quit();
 });

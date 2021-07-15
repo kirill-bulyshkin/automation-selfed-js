@@ -28,6 +28,10 @@ class BasePage {
     get acceptCookiesButton() {
         return this.browser.driver.findElement(By.xpath("//button[@class='button button--solid button--transparent']"));
     }
+
+    get timerValue() {
+        return this.browser.driver.findElement(By.xpath("//*[@id='app']/div/div/div[2]/div")).getText();
+    }
 }
 
 module.exports = BasePage;
