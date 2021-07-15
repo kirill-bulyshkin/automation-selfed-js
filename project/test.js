@@ -10,6 +10,53 @@ beforeEach(async () => {
    await browser.init();
 });
 
+it('First Test Case', async () => {
+    await browser.navigate(testData.link);
+
+    let page = new BasePage(browser);
+
+    expect(await page.welcomePageText).to.include(testData.welcomeText);
+
+    const secondPageLink = await page.secondPageLink;
+    await secondPageLink.click();
+    
+    expect (await page.loginForm.isDisplayed()).to.be.equal(true);
+
+    function randomStr(length) {
+        let result           = '';
+        let characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let charactersLength = characters.length;
+        for ( let i = 0; i < length; i++ ) {
+           result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+     }
+     
+    randomString = randomStr(10);
+    
+    const passwordField = await page.passwordField;
+    await passwordField.sendKeys(Key.CONTROL + "a");
+    await passwordField.sendKeys(randomString);
+    
+    const emailField = await page.emailField;
+    await emailField.sendKeys(Key.CONTROL + "a");
+    await emailField.sendKeys(randomString);
+
+    const domainField = await page.domainField;
+    await domainField.sendKeys(Key.CONTROL + "a");
+    await domainField.sendKeys(randomString);
+
+    await page.domainDropdown.click();
+    await page.dropdownItem.click();
+    await page.checkbox.click();
+    await page.nextButton.click();
+
+    expect (await page.secondLoginPageText).to.be.equal(testData.secondLoginPageValue);
+
+     //Choose 3 random interests
+    
+});
+
 it('Second Test Case', async () => {
     await browser.navigate(testData.link);
 
