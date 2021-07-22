@@ -12,6 +12,7 @@ beforeEach(async () => {
 
 it('First Test Case', async () => {
     await browser.navigate(testData.link);
+    await browser.windowMaximize();
 
     let page = new BasePage(browser);
 
@@ -53,8 +54,27 @@ it('First Test Case', async () => {
 
     expect (await page.secondLoginPageText).to.be.equal(testData.secondLoginPageValue);
 
-     //Choose 3 random interests
+    await page.unselectAllCheckbox.click();
+
+    const listOfCheckboxes = await page.listOfCheckboxes;
+    const listOfCheckboxesLength = listOfCheckboxes.length;
+
+    function getRandomIntInclusive(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    };
+
+    do {
+        randomCheckbox = getRandomIntInclusive(0, listOfCheckboxesLength - 1);
+        listOfCheckboxes[randomCheckbox].click();
+        await page.secondNextButton.click();
+        listOfErrors = await page.listOfErrors;
+        amountOfErrors = listOfErrors.length
+
+    } while (amountOfErrors != 1);
     
+    expect (await page.expectedErrorText).to.be.equal(testData.expectedErrorText)
 });
 
 it('Second Test Case', async () => {

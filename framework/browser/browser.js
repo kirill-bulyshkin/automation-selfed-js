@@ -25,6 +25,10 @@ class Browser {
     async setTimeout(timeoutValue) {
         return this.driver.manage().setTimeouts({implicit: timeoutValue});
     }
+
+    async windowMaximize() {
+        return this.driver.manage().window().maximize();
+    }
 }
 
 module.exports = Browser;

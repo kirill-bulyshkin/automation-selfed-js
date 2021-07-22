@@ -69,6 +69,25 @@ class BasePage {
         return this.browser.driver.findElement(By.xpath("//*[@class='page-indicator']")).getText();
     }
 
+    get unselectAllCheckbox() {
+        return this.browser.driver.findElement(By.xpath("//*[@for='interest_unselectall']/span"));
+    }
+
+    get listOfCheckboxes() {
+        return this.browser.driver.findElements(By.xpath("//*[@class='checkbox__box']"));
+    }
+
+    get listOfErrors() {
+        return this.browser.driver.findElements(By.xpath("//*[@class='avatar-and-interests__errors-list']/li"));
+    }
+
+    get secondNextButton() {
+        return this.browser.driver.findElement(By.xpath("//*[@class='button button--stroked button--white button--fluid']"));
+    }
+
+    get expectedErrorText() {
+        return this.browser.driver.findElement(By.xpath("//*[@class='avatar-and-interests__error']")).getText();
+    }
 }
 
 module.exports = BasePage;
