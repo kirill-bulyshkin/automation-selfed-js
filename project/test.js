@@ -5,6 +5,7 @@ const BasePage = require('../framework/basePage/basePage');
 const WelcomePage = require('./pages/welcomePage');
 const EmailPage = require('./pages/emailPage');
 const InterestsPage = require('./pages/interestsPage');
+const BaseElement = require('../framework/baseElement/baseElement');
 const {By, Key} = require('selenium-webdriver');
 
 
@@ -68,6 +69,8 @@ it('First Test Case', async () => {
     const listOfCheckboxes = await page.findElements(listOfCheckboxesLocator);
     const listOfCheckboxesLength = listOfCheckboxes.length;
 
+    let baseElement = new BaseElement();
+
     function getRandomIntInclusive(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
@@ -76,7 +79,7 @@ it('First Test Case', async () => {
 
     do {
         randomCheckbox = getRandomIntInclusive(0, listOfCheckboxesLength - 1);
-        listOfCheckboxes[randomCheckbox].click();
+        await baseElement.clickElement(listOfCheckboxes[randomCheckbox]);
         await interestsPage.secondNextButtonClick();
 
         listOfErrorsLocator = locators.listOfErrors;

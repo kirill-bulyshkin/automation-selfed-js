@@ -1,5 +1,6 @@
 const BasePage = require("../../framework/basePage/basePage");
 const {By} = require('selenium-webdriver');
+const BaseElement = require("../../framework/baseElement/baseElement");
 
 class EmailPage extends BasePage {
     constructor() {
