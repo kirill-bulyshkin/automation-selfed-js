@@ -1,7 +1,10 @@
 const {expect} = require('chai');
-const {testData} = require('../testData/test.data');
+const {testData, locators} = require('../testData/test.data');
 const Browser = require('../framework/browser/browser');
-const BasePage = require('../basePage/basePage')
+const BasePage = require('../framework/basePage/basePage');
+const WelcomePage = require('./pages/welcomePage');
+const EmailPage = require('./pages/emailPage');
+const InterestsPage = require('./pages/interestsPage');
 const {By, Key} = require('selenium-webdriver');
 
 
@@ -14,14 +17,15 @@ it('First Test Case', async () => {
     await browser.navigate(testData.link);
     await browser.windowMaximize();
 
-    let page = new BasePage(browser);
+    let welcomePage = new WelcomePage(browser);
 
-    expect(await page.welcomePageText).to.include(testData.welcomeText);
+    expect(await welcomePage.welcomePageText).to.include(testData.welcomeText);
 
-    const secondPageLink = await page.secondPageLink;
-    await secondPageLink.click();
+    await welcomePage.secondPageLinkClick();
+
+    let emailPage = new EmailPage(browser);
     
-    expect (await page.loginForm.isDisplayed()).to.be.equal(true);
+    expect (await emailPage.loginForm.isDisplayed()).to.be.equal(true);
 
     function randomStr(length) {
         let result           = '';
@@ -35,28 +39,33 @@ it('First Test Case', async () => {
      
     randomString = randomStr(10);
     
-    const passwordField = await page.passwordField;
+    const passwordField = await emailPage.passwordField;
     await passwordField.sendKeys(Key.CONTROL + "a");
     await passwordField.sendKeys(randomString);
     
-    const emailField = await page.emailField;
+    const emailField = await emailPage.emailField;
     await emailField.sendKeys(Key.CONTROL + "a");
     await emailField.sendKeys(randomString);
 
-    const domainField = await page.domainField;
+    const domainField = await emailPage.domainField;
     await domainField.sendKeys(Key.CONTROL + "a");
     await domainField.sendKeys(randomString);
 
-    await page.domainDropdown.click();
-    await page.dropdownItem.click();
-    await page.checkbox.click();
-    await page.nextButton.click();
+    await emailPage.domainDropdownClick();
+    await emailPage.dropdownItemClick();
+    await emailPage.checkboxClick();
+    await emailPage.nextButtonClick();
 
-    expect (await page.secondLoginPageText).to.be.equal(testData.secondLoginPageValue);
+    let interestsPage = new InterestsPage(browser);
 
-    await page.unselectAllCheckbox.click();
+    expect (await interestsPage.secondLoginPageText).to.be.equal(testData.secondLoginPageValue);
 
-    const listOfCheckboxes = await page.listOfCheckboxes;
+    await interestsPage.unselectAllCheckboxClick();
+
+    let page = new BasePage(browser);
+
+    const listOfCheckboxesLocator = locators.listOfCheckboxes;
+    const listOfCheckboxes = await page.findElements(listOfCheckboxesLocator);
     const listOfCheckboxesLength = listOfCheckboxes.length;
 
     function getRandomIntInclusive(min, max) {
@@ -68,52 +77,58 @@ it('First Test Case', async () => {
     do {
         randomCheckbox = getRandomIntInclusive(0, listOfCheckboxesLength - 1);
         listOfCheckboxes[randomCheckbox].click();
-        await page.secondNextButton.click();
-        listOfErrors = await page.listOfErrors;
+        await interestsPage.secondNextButtonClick();
+
+        listOfErrorsLocator = locators.listOfErrors;
+        listOfErrors = await page.findElements(listOfErrorsLocator);
         amountOfErrors = listOfErrors.length
 
     } while (amountOfErrors != 1);
     
-    expect (await page.expectedErrorText).to.be.equal(testData.expectedErrorText)
+    expect (await interestsPage.expectedErrorText).to.be.equal(testData.expectedErrorText)
 });
 
 it('Second Test Case', async () => {
     await browser.navigate(testData.link);
 
-    let page = new BasePage(browser);
+    let welcomePage = new WelcomePage(browser);
 
-    expect(await page.welcomePageText).to.include(testData.welcomeText);
+    expect(await welcomePage.welcomePageText).to.include(testData.welcomeText);
 
-    const secondPageLink = await page.secondPageLink;
-    await secondPageLink.click();
+    await welcomePage.secondPageLinkClick();
 
-    const hideHelpButton = await page.hideHelpButton;
-    await hideHelpButton.click();
+    let emailPage = new EmailPage(browser);
 
-    const helpFormClassAttribute = await page.helpFormClassAttribute;
+    await emailPage.hideHelpButtonClick();
 
-    expect(helpFormClassAttribute).to.be.equal(testData.hiddenHelpForm);
+    const helpFormClassAttribute = await emailPage.helpFormClassAttribute;
+    const hiddenHelpForm = 'help-form is-hidden';
+
+    expect(helpFormClassAttribute).to.be.equal(hiddenHelpForm);
 
 });
 
 it('Third Test Case', async () => {
     await browser.navigate(testData.link);
 
-    let page = new BasePage(browser);
+    let welcomePage = new WelcomePage(browser);
 
-    expect(await page.welcomePageText).to.include(testData.welcomeText);
+    expect(await welcomePage.welcomePageText).to.include(testData.welcomeText);
 
-    const secondPageLink = await page.secondPageLink;
-    await secondPageLink.click();
+    await welcomePage.secondPageLinkClick();
 
     const timeoutValue = 2000; 
     await browser.setTimeout(timeoutValue);
 
-    const acceptCookiesButton = await page.acceptCookiesButton;
-    await acceptCookiesButton.click();
+    let emailPage = new EmailPage(browser);
 
-    const cookiesObject = await page.cookiesObject;
-    
+    await emailPage.acceptCookiesButtonClick();
+
+    let page = new BasePage(browser);
+
+    const cookiesObjectLocator = locators.cookiesObject;
+    const cookiesObject = await page.findElements(cookiesObjectLocator);
+
     expect(await cookiesObject.length).to.be.equal(0);
 });
 
@@ -121,14 +136,15 @@ it('Third Test Case', async () => {
 it('Fourth Test Case', async () => {
     await browser.navigate(testData.link);
 
-    let page = new BasePage(browser);
+    let welcomePage = new WelcomePage(browser);
 
-    expect(await page.welcomePageText).to.include(testData.welcomeText);
+    expect(await welcomePage.welcomePageText).to.include(testData.welcomeText);
 
-    const secondPageLink = await page.secondPageLink;
-    await secondPageLink.click();
+    await welcomePage.secondPageLinkClick();
+
+    let emailPage = new EmailPage(browser);
     
-    expect(await page.timerValue).to.be.equal(testData.timerStartValue);
+    expect(await emailPage.timerValue).to.be.equal(testData.timerStartValue);
 });
 
 
