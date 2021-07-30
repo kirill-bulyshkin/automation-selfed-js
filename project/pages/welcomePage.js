@@ -1,4 +1,5 @@
 const BasePage = require("../../framework/basePage/basePage");
+const {locators} = require('../../testData/test.data');
 const {By} = require('selenium-webdriver');
 
 class WelcomePage extends BasePage {
@@ -8,11 +9,11 @@ class WelcomePage extends BasePage {
     }
 
     get welcomePageText() {
-        return this.browser.driver.findElement(By.xpath("//p[@class='start__paragraph']")).getText();
+        return this.browser.driver.findElement(By.xpath(locators.welcomePageText)).getText();
     }
 
     async secondPageLinkClick() {
-        return this.browser.driver.findElement(By.xpath("//a[@class='start__link']")).click();
+        return this.browser.driver.findElement(By.xpath(locators.secondPageLinkClick)).click();
     }
 
 }

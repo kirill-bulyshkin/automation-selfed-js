@@ -1,13 +1,10 @@
 //Selenium connection
-const {Builder, By} = require('selenium-webdriver');
+const {Builder, By, Key} = require('selenium-webdriver');
 
 class Browser {
-    constructor(browserName) {
-        this.browserName = browserName;
-    }
 
-    async init() {
-        this.driver = await new Builder().forBrowser(this.browserName).build();
+    async init(browserName) {
+        this.driver = await new Builder().forBrowser(browserName).build();
     }
 
     async navigate(url) {
@@ -28,6 +25,14 @@ class Browser {
 
     async windowMaximize() {
         return this.driver.manage().window().maximize();
+    }
+
+    async clearField(field) {
+        field.sendKeys(Key.CONTROL + "a" + Key.DELETE);
+    } 
+
+    async setValue(field, value) {
+        field.sendKeys(value);
     }
 }
 

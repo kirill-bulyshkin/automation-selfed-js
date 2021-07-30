@@ -5,16 +5,15 @@ const BasePage = require('../framework/basePage/basePage');
 const WelcomePage = require('./pages/welcomePage');
 const EmailPage = require('./pages/emailPage');
 const InterestsPage = require('./pages/interestsPage');
-const BaseElement = require('../framework/baseElement/baseElement');
-const {By, Key} = require('selenium-webdriver');
+const {Key} = require('selenium-webdriver');
 
 
 beforeEach(async () => {
-   browser = new Browser('chrome');
-   await browser.init();
+   browser = new Browser;
+   await browser.init(testData.browserName);
 });
 
-it('First Test Case', async () => {
+it('User can sign up and choose interests', async () => {
     await browser.navigate(testData.link);
     await browser.windowMaximize();
 
@@ -29,8 +28,8 @@ it('First Test Case', async () => {
     expect (await emailPage.loginForm.isDisplayed()).to.be.equal(true);
 
     function randomStr(length) {
-        let result           = '';
-        let characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let result = '';
+        let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         let charactersLength = characters.length;
         for ( let i = 0; i < length; i++ ) {
            result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -41,16 +40,16 @@ it('First Test Case', async () => {
     randomString = randomStr(10);
     
     const passwordField = await emailPage.passwordField;
-    await passwordField.sendKeys(Key.CONTROL + "a");
-    await passwordField.sendKeys(randomString);
+    await browser.clearField(passwordField);
+    await browser.setValue(passwordField, randomString);
     
     const emailField = await emailPage.emailField;
-    await emailField.sendKeys(Key.CONTROL + "a");
-    await emailField.sendKeys(randomString);
+    await browser.clearField(emailField);
+    await browser.setValue(emailField, randomString);
 
     const domainField = await emailPage.domainField;
-    await domainField.sendKeys(Key.CONTROL + "a");
-    await domainField.sendKeys(randomString);
+    await browser.clearField(domainField);
+    await browser.setValue(domainField, randomString);
 
     await emailPage.domainDropdownClick();
     await emailPage.dropdownItemClick();
@@ -69,8 +68,6 @@ it('First Test Case', async () => {
     const listOfCheckboxes = await page.findElements(listOfCheckboxesLocator);
     const listOfCheckboxesLength = listOfCheckboxes.length;
 
-    let baseElement = new BaseElement();
-
     function getRandomIntInclusive(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
@@ -79,7 +76,7 @@ it('First Test Case', async () => {
 
     do {
         randomCheckbox = getRandomIntInclusive(0, listOfCheckboxesLength - 1);
-        await baseElement.clickElement(listOfCheckboxes[randomCheckbox]);
+        await page.click(listOfCheckboxes[randomCheckbox]);
         await interestsPage.secondNextButtonClick();
 
         listOfErrorsLocator = locators.listOfErrors;
@@ -91,7 +88,7 @@ it('First Test Case', async () => {
     expect (await interestsPage.expectedErrorText).to.be.equal(testData.expectedErrorText)
 });
 
-it('Second Test Case', async () => {
+it('Help form could be hidden', async () => {
     await browser.navigate(testData.link);
 
     let welcomePage = new WelcomePage(browser);
@@ -105,13 +102,13 @@ it('Second Test Case', async () => {
     await emailPage.hideHelpButtonClick();
 
     const helpFormClassAttribute = await emailPage.helpFormClassAttribute;
-    const hiddenHelpForm = 'help-form is-hidden';
+    const hiddenHelpFormClass = 'help-form is-hidden';
 
-    expect(helpFormClassAttribute).to.be.equal(hiddenHelpForm);
+    expect(helpFormClassAttribute).to.be.equal(hiddenHelpFormClass);
 
 });
 
-it('Third Test Case', async () => {
+it('Accepting cookies', async () => {
     await browser.navigate(testData.link);
 
     let welcomePage = new WelcomePage(browser);
@@ -119,9 +116,8 @@ it('Third Test Case', async () => {
     expect(await welcomePage.welcomePageText).to.include(testData.welcomeText);
 
     await welcomePage.secondPageLinkClick();
-
-    const timeoutValue = 2000; 
-    await browser.setTimeout(timeoutValue);
+ 
+    await browser.setTimeout(testData.timeoutValue);
 
     let emailPage = new EmailPage(browser);
 
@@ -136,7 +132,7 @@ it('Third Test Case', async () => {
 });
 
 
-it('Fourth Test Case', async () => {
+it('Timer starts counting from zero', async () => {
     await browser.navigate(testData.link);
 
     let welcomePage = new WelcomePage(browser);

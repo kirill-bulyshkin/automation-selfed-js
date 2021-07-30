@@ -1,5 +1,6 @@
 const BasePage = require("../../framework/basePage/basePage");
 const {By} = require('selenium-webdriver');
+const {locators} = require("../../testData/test.data");
 
 class InterestsPage extends BasePage {
     constructor() {
@@ -8,19 +9,19 @@ class InterestsPage extends BasePage {
     }
 
     get secondLoginPageText() {
-        return this.browser.driver.findElement(By.xpath("//*[@class='page-indicator']")).getText();
+        return this.browser.driver.findElement(By.xpath(locators.secondLoginPageText)).getText();
     }
 
     async unselectAllCheckboxClick() {
-        return this.browser.driver.findElement(By.xpath("//*[@for='interest_unselectall']/span")).click();
+        return this.browser.driver.findElement(By.xpath(locators.unselectAllCheckboxClick)).click();
     }
 
     async secondNextButtonClick() {
-        return this.browser.driver.findElement(By.xpath("//*[@class='button button--stroked button--white button--fluid']")).click();
+        return this.browser.driver.findElement(By.xpath(locators.secondNextButtonClick)).click();
     }
 
     get expectedErrorText() {
-        return this.browser.driver.findElement(By.xpath("//*[@class='avatar-and-interests__error']")).getText();
+        return this.browser.driver.findElement(By.xpath(locators.expectedErrorText)).getText();
     }
 
 }

@@ -8,6 +8,10 @@ class BasePage {
     async findElements(locator) {
         return this.browser.driver.findElements(By.xpath(locator));
     }
+
+    async click(element) {
+        await element.click();
+    }
 }
 
 module.exports = BasePage;
