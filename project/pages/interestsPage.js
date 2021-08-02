@@ -1,27 +1,50 @@
 const BasePage = require("../../framework/basePage/basePage");
 const {By} = require('selenium-webdriver');
 const {locators} = require("../../testData/test.data");
+const Checkbox = require("../../framework/baseElement/checkbox");
+const {getRandomIntInclusive} = require('../../framework/utils/randomGenerator');
+const Label = require("../../framework/baseElement/label");
+const Button = require("../../framework/baseElement/button");
 
 class InterestsPage extends BasePage {
     constructor() {
-        super();
-        this.browser = browser;
+        super(locators.secondLoginPageText);
+        this.uniqueLocator = locators.secondLoginPageText;
     }
 
-    get secondLoginPageText() {
-        return this.browser.driver.findElement(By.xpath(locators.secondLoginPageText)).getText();
-    }
+    // get secondLoginPageText() {return this.browser.driver.findElement(By.xpath(locators.secondLoginPageText)).getText();}
+
+    get unselectAllCheckbox() {return new Checkbox('unselectAllCheckbox', locators.unselectAllCheckbox);}
+    get expectedError() {return new Label('expectedError', locators.expectedError);}
+    get secondNextButton() {return new Button('secondNextButton', locators.secondNextButton);}
 
     async unselectAllCheckboxClick() {
-        return this.browser.driver.findElement(By.xpath(locators.unselectAllCheckboxClick)).click();
+        return this.unselectAllCheckbox.click();
     }
 
     async secondNextButtonClick() {
-        return this.browser.driver.findElement(By.xpath(locators.secondNextButtonClick)).click();
+        return this.secondNextButton.click();
     }
 
-    get expectedErrorText() {
-        return this.browser.driver.findElement(By.xpath(locators.expectedErrorText)).getText();
+
+    async selectInterests(amount) {
+        const interestsCheckboxes = await this.findElements(locators.interestsCheckbox);
+        const interestsNames = await this.findElements(locators.interestsNames);
+        for(let i=0; i < interestsNames.length; i++){
+            if((await interestsNames[i].getText()) == 'Select all' || (await interestsNames[i].getText()) == 'Unselect all'){
+                (await interestsCheckboxes).splice(i, 1);
+                (await interestsNames).splice(i, 1);
+                i--;
+            }
+        }
+        console.log(interestsNames);
+        for(let i=0; i<amount; i++){
+            await interestsCheckboxes[getRandomIntInclusive(0, interestsCheckboxes.length)].click();
+        }
+    }
+
+    async getExpectedErrorText() {
+        return this.expectedError.getText();
     }
 
 }

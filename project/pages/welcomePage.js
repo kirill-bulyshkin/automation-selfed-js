@@ -1,21 +1,30 @@
 const BasePage = require("../../framework/basePage/basePage");
 const {locators} = require('../../testData/test.data');
 const {By} = require('selenium-webdriver');
+const Label = require("../../framework/baseElement/label");
+const Link = require("../../framework/baseElement/link");
 
 class WelcomePage extends BasePage {
     constructor() {
-        super();
-        this.browser = browser;
+        super(locators.welcomeTextLabel);
+        this.uniqueLocator = locators.welcomeTextLabel;
     }
 
-    get welcomePageText() {
-        return this.browser.driver.findElement(By.xpath(locators.welcomePageText)).getText();
+    get welcomeTextLabel() {
+        return new Label('welcomeTextLabel', locators.welcomeTextLabel);
     }
 
-    async secondPageLinkClick() {
-        return this.browser.driver.findElement(By.xpath(locators.secondPageLinkClick)).click();
+    get secondPageLink() {
+        return new Link('secondPageLink', locators.secondPageLink);
     }
 
+    async getWelcomeText() {
+        return this.welcomeTextLabel.getText();
+    }
+
+    async clickSecondPageLink() {
+        return this.secondPageLink.click();
+    }
 }
 
 module.exports = WelcomePage;

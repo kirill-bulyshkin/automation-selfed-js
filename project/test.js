@@ -6,86 +6,38 @@ const WelcomePage = require('./pages/welcomePage');
 const EmailPage = require('./pages/emailPage');
 const InterestsPage = require('./pages/interestsPage');
 const {Key} = require('selenium-webdriver');
+const {randomStr} = require('../framework/utils/randomGenerator');
 
 
 beforeEach(async () => {
-   browser = new Browser;
-   await browser.init(testData.browserName);
+   await Browser.init(testData.browserName);
 });
 
-it('User can sign up and choose interests', async () => {
-    await browser.navigate(testData.link);
-    await browser.windowMaximize();
-
-    let welcomePage = new WelcomePage(browser);
-
-    expect(await welcomePage.welcomePageText).to.include(testData.welcomeText);
-
-    await welcomePage.secondPageLinkClick();
-
-    let emailPage = new EmailPage(browser);
-    
-    expect (await emailPage.loginForm.isDisplayed()).to.be.equal(true);
-
-    function randomStr(length) {
-        let result = '';
-        let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        let charactersLength = characters.length;
-        for ( let i = 0; i < length; i++ ) {
-           result += characters.charAt(Math.floor(Math.random() * charactersLength));
-        }
-        return result;
-     }
-     
-    randomString = randomStr(10);
-    
-    const passwordField = await emailPage.passwordField;
-    await browser.clearField(passwordField);
-    await browser.setValue(passwordField, randomString);
-    
-    const emailField = await emailPage.emailField;
-    await browser.clearField(emailField);
-    await browser.setValue(emailField, randomString);
-
-    const domainField = await emailPage.domainField;
-    await browser.clearField(domainField);
-    await browser.setValue(domainField, randomString);
-
+it.only('User can sign up and choose interests', async () => {
+    await Browser.navigate(testData.link);
+    await Browser.windowMaximize();
+    let welcomePage = new WelcomePage();
+    expect(await welcomePage.isDisplayed()).to.be.true;
+    await welcomePage.clickSecondPageLink();
+    let emailPage = new EmailPage();
+    expect (await emailPage.isDisplayed()).to.be.true;
+    const randomString = randomStr(10);
+    await emailPage.clearPasswordValue();
+    await emailPage.setPasswordValue(randomString);
+    await emailPage.clearEmailValue();
+    await emailPage.setEmailValue(randomString);
+    await emailPage.clearDomainValue();
+    await emailPage.setDomainValue(randomString);
     await emailPage.domainDropdownClick();
     await emailPage.dropdownItemClick();
     await emailPage.checkboxClick();
     await emailPage.nextButtonClick();
-
-    let interestsPage = new InterestsPage(browser);
-
-    expect (await interestsPage.secondLoginPageText).to.be.equal(testData.secondLoginPageValue);
-
+    let interestsPage = new InterestsPage();
+    expect (await interestsPage.isDisplayed()).to.be.true;
     await interestsPage.unselectAllCheckboxClick();
-
-    let page = new BasePage(browser);
-
-    const listOfCheckboxesLocator = locators.listOfCheckboxes;
-    const listOfCheckboxes = await page.findElements(listOfCheckboxesLocator);
-    const listOfCheckboxesLength = listOfCheckboxes.length;
-
-    function getRandomIntInclusive(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    };
-
-    do {
-        randomCheckbox = getRandomIntInclusive(0, listOfCheckboxesLength - 1);
-        await page.click(listOfCheckboxes[randomCheckbox]);
-        await interestsPage.secondNextButtonClick();
-
-        listOfErrorsLocator = locators.listOfErrors;
-        listOfErrors = await page.findElements(listOfErrorsLocator);
-        amountOfErrors = listOfErrors.length
-
-    } while (amountOfErrors != 1);
-    
-    expect (await interestsPage.expectedErrorText).to.be.equal(testData.expectedErrorText)
+    await interestsPage.selectInterests(3);
+    await interestsPage.secondNextButtonClick();
+    expect (await interestsPage.getExpectedErrorText()).to.be.equal(testData.expectedErrorText);
 });
 
 it('Help form could be hidden', async () => {
@@ -148,6 +100,6 @@ it('Timer starts counting from zero', async () => {
 
 
 afterEach(async () => {
-    await browser.driver.quit();
+    await Browser.driver.quit();
 });
 

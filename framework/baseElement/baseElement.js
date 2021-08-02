@@ -1,17 +1,26 @@
-const {By} = require('selenium-webdriver');
+const Browser = require('../browser/browser');
 
 class BaseElement {
 
-    // async click(element) {
-    //     await element.click();
-    // }
+    constructor(name, locator) {
+        this.name = name;
+        this.locator = locator;
+    }
+
+    async click() {
+        return (await this.findElement()).click();
+    }
 
     async isDisplayed(element) {
         await element.isDiplayed();
     }
 
-    async getElementText(element) {
-        await element.getText();
+    async getText() {
+        return (await this.findElement()).getText();
+    }
+
+    async findElement() {
+       return Browser.driver.findElement(this.locator);
     }
 
 }

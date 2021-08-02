@@ -1,3 +1,5 @@
+const {By} = require('selenium-webdriver');
+
 const testData = {
     'browserName': 'chrome',
     'link': 'https://userinyerface.com/game.html%20target=',
@@ -9,27 +11,28 @@ const testData = {
 };
 
 const locators = {
-    'cookiesObject': "//div[@class='cookies']",
-    'listOfCheckboxes': "//*[@class='checkbox__box']",
-    'listOfErrors': "//*[@class='avatar-and-interests__errors-list']/li",
-    'welcomePageText':"//p[@class='start__paragraph']",
-    'secondPageLinkClick': "//a[@class='start__link']",
-    'helpFormClassAttribute':"//*[@id='app']/div/div[2]",
-    'hideHelpButtonClick': "//button[@class='button button--solid button--blue help-form__send-to-bottom-button']",
-    'acceptCookiesButtonClick':"//button[@class='button button--solid button--transparent']",
-    'timerValue': "//div[@class='timer timer--white timer--center']",
-    'loginForm': "//div[@class='login-form__container']",
-    'passwordField': "//input[@placeholder='Choose Password']",
-    'emailField': "//input[@placeholder='Your email']",
-    'domainField': "//input[@placeholder='Domain']",
-    'domainDropdownClick': "//div[@class='dropdown__opener']",
-    'dropdownItemClick': "//div[@class='dropdown__list-item']",
-    'checkboxClick': "//*[@class='icon icon-check checkbox__check']",
-    'nextButtonClick': "//*[@class='button--secondary']",
-    'secondLoginPageText': "//*[@class='page-indicator']",
-    'unselectAllCheckboxClick': "//*[@for='interest_unselectall']/span",
-    'secondNextButtonClick': "//*[@class='button button--stroked button--white button--fluid']",
-    'expectedErrorText': "//*[@class='avatar-and-interests__error']"
+    'cookiesObject': By.xpath("//div[@class='cookies']"),
+    'interestsCheckbox': By.xpath("//*[@class='checkbox__box']"),
+    'interestsNames': By.xpath("//span[not(@*)]"),
+    'listOfErrors': By.xpath("//*[@class='avatar-and-interests__errors-list']/li"),
+    'welcomeTextLabel': By.xpath("//p[@class='start__paragraph']"),
+    'secondPageLink': By.xpath("//a[@class='start__link']"),
+    'helpFormClassAttribute': By.xpath("//*[@id='app']/div/div[2]"),
+    'hideHelpButtonClick': By.xpath("//button[@class='button button--solid button--blue help-form__send-to-bottom-button']"),
+    'acceptCookiesButtonClick': By.xpath("//button[@class='button button--solid button--transparent']"),
+    'timerValue': By.xpath("//div[@class='timer timer--white timer--center']"),
+    'loginForm': By.xpath("//div[@class='login-form__container']"),
+    'passwordField': By.xpath("//input[@placeholder='Choose Password']"),
+    'emailField': By.xpath("//input[@placeholder='Your email']"),
+    'domainField': By.xpath("//input[@placeholder='Domain']"),
+    'domainDropdown': By.xpath("//div[@class='dropdown__opener']"),
+    'dropdownItem': By.xpath("//div[@class='dropdown__list-item']"),
+    'checkbox': By.xpath("//*[@class='icon icon-check checkbox__check']"),
+    'nextButton': By.xpath("//*[@class='button--secondary']"),
+    'secondLoginPageText': By.xpath("//*[@class='page-indicator']"),
+    'unselectAllCheckbox': By.xpath("//*[@for='interest_unselectall']/span"),
+    'secondNextButton': By.xpath("//*[@class='button button--stroked button--white button--fluid']"),
+    'expectedError': By.xpath("//*[@class='avatar-and-interests__error']")
 }
 
 module.exports = {testData, locators};

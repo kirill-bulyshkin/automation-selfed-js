@@ -1,16 +1,17 @@
 const {By} = require('selenium-webdriver');
+const Browser = require('../browser/browser');
 
 class BasePage {
-    constructor(browser) {
-        this.browser = browser;
+    constructor(uniqueLocator) {
+        this.uniqueLocator = uniqueLocator;
     }
 
     async findElements(locator) {
-        return this.browser.driver.findElements(By.xpath(locator));
+        return Browser.driver.findElements(locator);
     }
 
-    async click(element) {
-        await element.click();
+    async isDisplayed() {
+        return Browser.driver.findElement(this.uniqueLocator).isDisplayed();
     }
 }
 
