@@ -1,5 +1,5 @@
-//Selenium connection
-const {Builder, By, Key} = require('selenium-webdriver');
+const {Builder, By} = require('selenium-webdriver');
+const {testData} = require('../../testData/test.data');
 
 class Browser {
 
@@ -19,7 +19,7 @@ class Browser {
         return this.driver.switchTo().defaultContent();
     }
 
-    static async setTimeout(timeoutValue = 2000) {
+    static async setTimeout(timeoutValue = testData.timeoutValue) {
         return this.driver.manage().setTimeouts({implicit: timeoutValue});
     }
 

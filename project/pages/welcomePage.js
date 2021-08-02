@@ -1,6 +1,5 @@
 const BasePage = require("../../framework/basePage/basePage");
-const {locators} = require('../../testData/test.data');
-const {By} = require('selenium-webdriver');
+const {locators} = require("../locators/locators");
 const Label = require("../../framework/baseElement/label");
 const Link = require("../../framework/baseElement/link");
 

@@ -1,6 +1,5 @@
 const BasePage = require("../../framework/basePage/basePage");
-const {By} = require('selenium-webdriver');
-const {locators} = require("../../testData/test.data");
+const {locators} = require("../locators/locators");
 const Checkbox = require("../../framework/baseElement/checkbox");
 const {getRandomIntInclusive} = require('../../framework/utils/randomGenerator');
 const Label = require("../../framework/baseElement/label");
@@ -11,8 +10,6 @@ class InterestsPage extends BasePage {
         super(locators.secondLoginPageText);
         this.uniqueLocator = locators.secondLoginPageText;
     }
-
-    // get secondLoginPageText() {return this.browser.driver.findElement(By.xpath(locators.secondLoginPageText)).getText();}
 
     get unselectAllCheckbox() {return new Checkbox('unselectAllCheckbox', locators.unselectAllCheckbox);}
     get expectedError() {return new Label('expectedError', locators.expectedError);}
@@ -37,7 +34,6 @@ class InterestsPage extends BasePage {
                 i--;
             }
         }
-        console.log(interestsNames);
         for(let i=0; i<amount; i++){
             await interestsCheckboxes[getRandomIntInclusive(0, interestsCheckboxes.length)].click();
         }

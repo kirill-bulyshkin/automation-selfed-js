@@ -7,20 +7,20 @@ class BaseElement {
         this.locator = locator;
     }
 
-    async click() {
-        return (await this.findElement()).click();
+    async findElement() {
+       return Browser.driver.findElement(this.locator);
     }
 
-    async isDisplayed(element) {
-        await element.isDiplayed();
+    async click() {
+        return (await this.findElement()).click();
     }
 
     async getText() {
         return (await this.findElement()).getText();
     }
 
-    async findElement() {
-       return Browser.driver.findElement(this.locator);
+    async getAttribute(attribute) {
+        return (await this.findElement()).getAttribute(attribute);
     }
 
 }

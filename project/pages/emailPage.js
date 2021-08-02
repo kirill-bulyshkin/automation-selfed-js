@@ -1,6 +1,5 @@
 const BasePage = require("../../framework/basePage/basePage");
-const {By} = require('selenium-webdriver');
-const {locators} = require("../../testData/test.data");
+const {locators} = require("../locators/locators");
 const TextArea = require("../../framework/baseElement/textArea");
 const Label = require("../../framework/baseElement/label");
 const Dropdown = require("../../framework/baseElement/dropdown");
@@ -13,9 +12,6 @@ class EmailPage extends BasePage {
         this.uniqueLocator = locators.loginForm;
     }
 
-    get helpFormClassAttribute() {return this.browser.driver.findElement(By.xpath(locators.helpFormClassAttribute)).getAttribute('class');}
-    get timerValue() {return this.browser.driver.findElement(By.xpath(locators.timerValue)).getText();}
-    get loginForm() {return this.browser.driver.findElement(By.xpath(locators.loginForm));}
     get passwordField() {return new TextArea('passwordField', locators.passwordField);}
     get emailField() {return new TextArea('emailField', locators.emailField);}
     get domainField() {return new TextArea('domainField', locators.domainField);}
@@ -23,31 +19,37 @@ class EmailPage extends BasePage {
     get dropdownItem() {return new Label('dropdownItem', locators.dropdownItem);}
     get checkbox() {return new Checkbox('checkbox', locators.checkbox);}
     get nextButton() {return new Button('nextButton', locators.nextButton);}
+    get hideHelpButton() {return new Button('hideHelpButton', locators.hideHelpButton);}  
+    get acceptCookiesButton() {return new Button('acceptCookiesButton', locators.acceptCookiesButton);}
+    get helpForm() {return new Label('helpForm', locators.helpForm);}
+    get timerArea() {return new TextArea('timerArea', locators.timerArea);}
 
 
     async clearPasswordValue() {
         return this.passwordField.clearValue();
     }
 
-    async setPasswordValue(value) {
-        return this.passwordField.setValue(value);
-    }
-
     async clearEmailValue() {
         return this.emailField.clearValue();
-    }
-
-    async setEmailValue(value) {
-        return this.emailField.setValue(value);
     }
 
     async clearDomainValue() {
         return this.domainField.clearValue();
     }
 
+
+    async setPasswordValue(value) {
+        return this.passwordField.setValue(value);
+    }
+
+    async setEmailValue(value) {
+        return this.emailField.setValue(value);
+    }
+
     async setDomainValue(value) {
         return this.domainField.setValue(value);
     }
+
 
     async domainDropdownClick() {
         return this.dropdown.click();
@@ -66,11 +68,19 @@ class EmailPage extends BasePage {
     }
 
     async hideHelpButtonClick() {
-        return this.browser.driver.findElement(By.xpath(locators.hideHelpButtonClick)).click(); 
+        return this.hideHelpButton.click(); 
     } 
     
     async acceptCookiesButtonClick() {
-        return this.browser.driver.findElement(By.xpath(locators.acceptCookiesButtonClick)).click();
+        return this.acceptCookiesButton.click();
+    }
+
+    async gethelpFormClassAttribute() {
+        return this.helpForm.getAttribute('class');
+    }
+    
+    async getTimerValue() {
+        return this.timerArea.getText();
     }
 
 }

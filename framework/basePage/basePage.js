@@ -1,4 +1,3 @@
-const {By} = require('selenium-webdriver');
 const Browser = require('../browser/browser');
 
 class BasePage {
