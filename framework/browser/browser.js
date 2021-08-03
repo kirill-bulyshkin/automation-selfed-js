@@ -12,7 +12,7 @@ class Browser {
     }
 
     static async goToFrame(framePath) {
-        return this.driver.switchTo().frame(this.driver.findElement(By.xpath(framePath)));
+        return this.driver.switchTo().frame(this.driver.findElement(framePath));
     }
 
     static async backFromFrame() {

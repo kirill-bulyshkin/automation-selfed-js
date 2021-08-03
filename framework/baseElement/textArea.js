@@ -1,5 +1,4 @@
 const BaseElement = require("./baseElement");
-const {Key} = require('selenium-webdriver');
 
 class TextArea extends BaseElement {
 

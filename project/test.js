@@ -21,7 +21,7 @@ it('User can sign up and choose interests', async () => {
     await welcomePage.clickSecondPageLink();
     let emailPage = new EmailPage();
     expect (await emailPage.isDisplayed()).to.be.true;
-    const randomString = randomStr(10);
+    const randomString = randomStr(testData.stringLength);
     await emailPage.clearPasswordValue();
     await emailPage.setPasswordValue(randomString);
     await emailPage.clearEmailValue();
@@ -35,7 +35,7 @@ it('User can sign up and choose interests', async () => {
     let interestsPage = new InterestsPage();
     expect (await interestsPage.isDisplayed()).to.be.true;
     await interestsPage.unselectAllCheckboxClick();
-    await interestsPage.selectInterests(3);
+    await interestsPage.selectInterests(testData.amountOfSelectedInterests);
     await interestsPage.secondNextButtonClick();
     expect (await interestsPage.getExpectedErrorText()).to.be.equal(testData.expectedErrorText);
 });
@@ -58,8 +58,7 @@ it('Accepting cookies', async () => {
     await Browser.setTimeout();
     let emailPage = new EmailPage();
     await emailPage.acceptCookiesButtonClick();
-    const cookiesObject = await emailPage.findElements(locators.cookiesObject);
-    expect(await cookiesObject.length).to.be.equal(0);
+    expect(await emailPage.getCookiesObjectsLength()).to.be.equal(0);
 });
 
 

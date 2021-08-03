@@ -19,10 +19,11 @@ class EmailPage extends BasePage {
     get dropdownItem() {return new Label('dropdownItem', locators.dropdownItem);}
     get checkbox() {return new Checkbox('checkbox', locators.checkbox);}
     get nextButton() {return new Button('nextButton', locators.nextButton);}
-    get hideHelpButton() {return new Button('hideHelpButton', locators.hideHelpButton);}  
+    get hideHelpButton() {return new Button('hideHelpButton', locators.hideHelpButton);}
+    get cookiesObjects() {return this.findElements(locators.cookiesObject);}
     get acceptCookiesButton() {return new Button('acceptCookiesButton', locators.acceptCookiesButton);}
     get helpForm() {return new Label('helpForm', locators.helpForm);}
-    get timerArea() {return new TextArea('timerArea', locators.timerArea);}
+    get timerArea() {return new Label('timerArea', locators.timerArea);}
 
 
     async clearPasswordValue() {
@@ -81,6 +82,10 @@ class EmailPage extends BasePage {
     
     async getTimerValue() {
         return this.timerArea.getText();
+    }
+
+    async getCookiesObjectsLength() {
+        return (await this.cookiesObjects).length;
     }
 
 }

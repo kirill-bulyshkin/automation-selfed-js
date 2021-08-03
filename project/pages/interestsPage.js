@@ -23,7 +23,6 @@ class InterestsPage extends BasePage {
         return this.secondNextButton.click();
     }
 
-
     async selectInterests(amount) {
         const interestsCheckboxes = await this.findElements(locators.interestsCheckbox);
         const interestsNames = await this.findElements(locators.interestsNames);
@@ -42,7 +41,6 @@ class InterestsPage extends BasePage {
     async getExpectedErrorText() {
         return this.expectedError.getText();
     }
-
 }
 
 module.exports = InterestsPage;

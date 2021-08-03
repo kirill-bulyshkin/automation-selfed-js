@@ -5,8 +5,10 @@ const testData = {
     'timerStartValue': '00:00:00',
     'secondLoginPageValue': '2 / 4',
     'expectedErrorText': 'Please upload a picture',
-    'timeoutValue' : 2000,
-    'hiddenHelpFormClass' : 'help-form is-hidden'
+    'timeoutValue': 2000,
+    'hiddenHelpFormClass': 'help-form is-hidden',
+    'stringLength': 10, 
+    'amountOfSelectedInterests': 3
 };
 
 module.exports = {testData};
