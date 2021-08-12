@@ -1,35 +1,36 @@
 const chai = require('chai');
 const expect = chai.expect;
 chai.use(require('chai-sorted'));
-
-const {testData, user5} = require('../testData/test.data');
+const JsonplaceholderApi = require('../framework/utils/jsonplaceholderApi');
+const {testData, user5, statusCodes} = require('../testData/test.data');
 const {randomStr, getRandomIntInclusive} = require('../framework/utils/randomGenerator');
-const axios = require('axios');
+
 
 describe('Testing of REST API', async () => {
     let userToCompare;
+    let jsonplaceholderApi = new JsonplaceholderApi(testData.link);
 
     it('List of the posts returned in JSON and sorting ascending id', async () => {
-        await axios.get(`${testData.link}/posts`).then(res => {
-            expect(res.status).to.eql(200);
-            expect(JSON.stringify(res.headers)).to.include("application/json");
-            expect(res.data).to.be.ascendingBy('id')
+        await jsonplaceholderApi.getPosts().then(res => {
+            expect(res.status).to.eql(statusCodes.ok);
+            expect(JSON.stringify(res.headers)).to.include(testData.jsonFormat);
+            expect(res.data).to.be.ascendingBy(testData.ascendingById)
         });
     });
 
     it('Getting post #99', async () => {
-        await axios.get(`${testData.link}/posts/99`).then(res => {
-            expect(res.status).to.eql(200);
-            expect(res.data.userId).to.eql(10);
-            expect(res.data.id).to.eql(99);
+        await jsonplaceholderApi.getPost(testData.post99).then(res => {
+            expect(res.status).to.eql(statusCodes.ok);
+            expect(res.data.userId).to.eql(testData.userId10);
+            expect(res.data.id).to.eql(testData.post99Id);
             expect(res.data.title).to.be.not.empty;
             expect(res.data.body).to.be.not.empty;
         });
     });
 
     it('Getting unexisting post #150', async () => {
-        await axios.get(`${testData.link}/posts/150`, {validateStatus: false}).then(res => {
-            expect(res.status).to.eql(404);
+        await jsonplaceholderApi.getUnexistPost(testData.unexistPostValue).then(res => {
+            expect(res.status).to.eql(statusCodes.notFound);
             expect(res.data).to.be.empty;
         });
     });
@@ -38,13 +39,9 @@ describe('Testing of REST API', async () => {
         const randomBody = `${randomStr(10)}_test_body`;
         const randomTitle = `${randomStr(5)}_test_title`;
         const randomUserId = getRandomIntInclusive(101, 199);
-        await axios.post(`${testData.link}/posts`, {
-            "body": randomBody,
-            "title": randomTitle,
-            "userId": randomUserId
-        })
+        await jsonplaceholderApi.createPost(randomBody, randomTitle, randomUserId)
         .then(res => {
-            expect(res.status).to.eql(201);
+            expect(res.status).to.eql(statusCodes.created);
             expect(res.data.body).to.eql(randomBody);
             expect(res.data.title).to.eql(randomTitle);
             expect(res.data.userId).to.eql(randomUserId);
@@ -52,18 +49,18 @@ describe('Testing of REST API', async () => {
     });
 
     it('Getting users', async () => {
-        await axios.get(`${testData.link}/users`).then(res => {
-            expect(res.status).to.eql(200);
-            expect(JSON.stringify(res.headers)).to.include("application/json");
-            const userIndex = res.data.findIndex(u => u.id === 5);
-            expect(res.data[userIndex]).to.eql(user5);
-            userToCompare = res.data[userIndex];
+        await jsonplaceholderApi.getUsers().then(res => {
+            expect(res.status).to.eql(statusCodes.ok);
+            expect(JSON.stringify(res.headers)).to.include(testData.jsonFormat);
+            const user5Index = res.data.findIndex(u => u.id === testData.userId5);
+            expect(res.data[user5Index]).to.eql(user5);
+            userToCompare = res.data[user5Index];
         });
     });
 
     it('Getting user 5', async () => {
-        await axios.get(`${testData.link}/users/5`).then(res => {
-            expect(res.status).to.eql(200);
+        await jsonplaceholderApi.getUser(testData.userId5).then(res => {
+            expect(res.status).to.eql(statusCodes.ok);
             expect(res.data).to.eql(userToCompare);
         });
     });

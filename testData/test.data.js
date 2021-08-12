@@ -1,5 +1,12 @@
 const testData = {
-    'link': 'https://jsonplaceholder.typicode.com'
+    'link': 'https://jsonplaceholder.typicode.com',
+    'jsonFormat': 'application/json',
+    'ascendingById': 'id',
+    'post99': 99,
+    'userId10': 10,
+    'post99Id': 99,
+    'unexistPostValue': 150,
+    'userId5': 5
 };
 
 const user5 = {
@@ -26,4 +33,10 @@ const user5 = {
     }
 };
 
-module.exports = {testData, user5};
+const statusCodes = {
+    'ok': 200,
+    'created': 201,
+    'notFound': 404
+}
+
+module.exports = {testData, user5, statusCodes};

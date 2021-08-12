@@ -1,3 +1,19 @@
-//должен уметь отправлять все виды запросов (методы GET, POST)
+const axios = require('axios');
 
-//потом должны быть реализованы классы для работы с конкретной апишкой. методы getUser и тд
+class ApiUtils {
+
+    constructor(link) {
+        this.link = link;
+    }
+
+    async get() {
+        return axios.get(this.link)
+    }
+
+    async post() {
+        return axios.post(this.link, {
+        })
+    }
+}
+
+module.exports = ApiUtils;
