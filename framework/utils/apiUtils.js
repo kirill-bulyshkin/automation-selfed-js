@@ -1,17 +1,16 @@
 const axios = require('axios');
 
 class ApiUtils {
-
-    constructor(link) {
-        this.link = link;
+    
+    async sendGetRequest(link, validateStatus) {
+        return axios.get(link, {validateStatus: validateStatus})
     }
 
-    async get() {
-        return axios.get(this.link)
-    }
-
-    async post() {
-        return axios.post(this.link, {
+    async sendPostRequest(link, body, title, userId) {
+        return axios.post(link, {
+            "body": body,
+            "title": title,
+            "userId": userId
         })
     }
 }

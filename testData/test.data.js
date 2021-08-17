@@ -6,7 +6,11 @@ const testData = {
     'userId10': 10,
     'post99Id': 99,
     'unexistPostValue': 150,
-    'userId5': 5
+    'userId5': 5,
+    'minUserId': 101,
+    'maxUserId': 199,
+    'bodyLength': 10,
+    'titleLength': 5
 };
 
 const user5 = {

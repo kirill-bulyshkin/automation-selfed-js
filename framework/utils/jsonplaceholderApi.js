@@ -1,37 +1,38 @@
-const axios = require('axios');
+const ApiUtils = require('./apiUtils');
+const Logger = require('./logger');
+const {testData} = require('../../testData/test.data');
+const apiUtils = new ApiUtils();
 
 class JsonplaceholderApi {
 
-    constructor(link) {
-        this.link = link;
+    static async getPosts() {
+        Logger.infoLog(`Receiving request to ${testData.link}/posts`)
+        return apiUtils.sendGetRequest(`${testData.link}/posts`)
     }
 
-    async getPosts() {
-        return axios.get(`${this.link}/posts`)
+    static async getPost(post) {
+        Logger.infoLog(`Receiving GET request to ${testData.link}/posts/${post}`)
+        return apiUtils.sendGetRequest(`${testData.link}/posts/${post}`)
     }
 
-    async getPost(post) {
-        return axios.get(`${this.link}/posts/${post}`)
+    static async getUnexistPost(post) {
+        Logger.infoLog(`Receiving GET request to ${testData.link}/posts/${post}`)
+        return apiUtils.sendGetRequest(`${testData.link}/posts/${post}`, false)
     }
 
-    async getUnexistPost(post) {
-        return axios.get(`${this.link}/posts/${post}`, {validateStatus: false})
+    static async createPost(body, title, userId) {     
+        Logger.infoLog(`Receiving POST request to ${testData.link}/posts`)
+        return apiUtils.sendPostRequest(`${testData.link}/posts`, body, title, userId)
     }
 
-    async createPost(body, title, userId) {     
-        return axios.post(`${this.link}/posts`, {
-            "body": body,
-            "title": title,
-            "userId": userId
-        })
+    static async getUsers() {
+        Logger.infoLog(`Receiving GET request to ${testData.link}/users`)
+        return apiUtils.sendGetRequest(`${testData.link}/users`)
     }
 
-    async getUsers() {
-        return axios.get(`${this.link}/users`)
-    }
-
-    async getUser(user) {
-        return axios.get(`${this.link}/users/${user}`)
+    static async getUser(user) {
+        Logger.infoLog(`Receiving GET request to ${testData.link}/users/${user}`)
+        return apiUtils.sendGetRequest(`${testData.link}/users/${user}`)
     }
 }
 
