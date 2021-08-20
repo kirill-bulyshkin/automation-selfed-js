@@ -1,7 +1,7 @@
 const timestamp = new Date();
 
 class Logger {
-    static async infoLog(message) {
+    static infoLog(message) {
         console.log(`INFO: ${message} - (${timestamp})`)
     }
 }
