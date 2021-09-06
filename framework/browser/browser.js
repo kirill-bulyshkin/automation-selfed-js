@@ -34,6 +34,10 @@ class Browser {
 
     //добавить wait.Located для всего элемента (поста)
     
+    static async waitingExpectedPost(postId) {
+        return this.driver.wait(until.elementLocated(locators.findPost(postId)), 5000);
+    }
+
     static async waitingExpectedPostText(postId, text) {
         return this.driver.wait(until.elementTextIs(
            await this.driver.findElement(locators.findPostTextField(postId)), text), 5000);

@@ -8,9 +8,6 @@ const WallPage = require('../project/pages/wallPage');
 const VkApiUtils = require('../framework/utils/vkApiUtils');
 const Logger = require('../framework/utils/logger');
 
-const { locators } = require('./locators/locators');
-
-
 before(async () => {
    await Browser.init(testData.browserNameChrome);
 });
@@ -32,30 +29,47 @@ it('TEST', async () => {
         postId = res.data.response.post_id;
     });
     let wallPage = new WallPage();
-    expect (await wallPage.getPostText(postId)).to.eql(randomText);
-    expect (await wallPage.getPostAuthor(postId)).to.eql(testData.author)
-    const randomTextEdited = `${randomText} Edited`;
-    await VkApiUtils.editPost(postId, randomTextEdited).then(res => {
-        console.log(res.data)
-    });
-    // await Browser.setTimeout();
-    // async () => await timeout(1000);
-    // this.timeout(1000);
-    // var timeout = setTimeout(done, 1000); 
-    // await driver.wait(until.elementTextIs(element, text), 5000)
-    // const text = await wallPage.getPostTextField(postId);
-    // console.log(text);
+    // expect (await wallPage.getPostText(postId)).to.eql(randomText);
+    // expect (await wallPage.getPostAuthor(postId)).to.eql(testData.author)
+    // const randomTextEdited = `${randomText} Edited`;
 
-    // const postTextElementLocator = locators.findPostTextField(postId);
-    // console.log(postTextElementLocator)
-    await Browser.waitingExpectedPostText(postId, randomTextEdited);
-    expect (await wallPage.getPostText(postId)).to.eql(randomTextEdited);
+    //TEMP VALUE
+    postId = 8124;
 
 
-    // await VkApiUtils.sendGetRequest('https://api.vk.com/method/users.get?user_id=627657327&access_token=1d68447d1a3db836e6ac5e546ff70c273a5011925814086664867a724ea9b63129e62cac7fd9fae5854a5&v=5.103')
-    // .then(res => {
+    // await VkApiUtils.editPost(postId, randomTextEdited).then(res => {
     //     console.log(res.data)
-    // })
+    // });
+
+
+    //TEMP
+    // await Browser.waitingExpectedPost(postId);
+    // await Browser.waitingExpectedPostText(postId, randomTextEdited);
+
+
+    // expect (await wallPage.getPostText(postId)).to.eql(randomTextEdited);
+    // const randomComment = `Test Comment ${randomStr(testData.randomStringLength)}`;
+    // await VkApiUtils.addComment(postId, randomComment).then(res => {
+    //     console.log(res.data)
+    // });
+    // expect (await wallPage.getPostCommentText(postId)).to.eql(randomComment);
+    // expect (await wallPage.getPostCommentAuthor(postId)).to.eql(testData.author);
+    // await wallPage.clickLikeButton(postId);
+    // let likesCountValue;
+    // let likeFromFirstName;
+    // let likeFromLastName;
+    // await VkApiUtils.getPostLikes(postId).then(res => {
+    //     likesCountValue = res.data.response.count;
+    //     likeFromFirstName = res.data.response.items[testData.firstItem].first_name;
+    //     likeFromLastName = res.data.response.items[testData.firstItem].last_name;
+    // });
+    // expect (likesCountValue).to.eql(testData.expectedLikesCountValue);
+    // expect (`${likeFromFirstName} ${likeFromLastName}`).to.eql(testData.author);
+    // await VkApiUtils.deletePost(postId).then(res => {
+    //     console.log(res.data)
+    // });
+    // expect ((await wallPage.tryToFindDeletedPost(postId)).length).to.eql(testData.expectedArrayLength);
+
 });
 
 
