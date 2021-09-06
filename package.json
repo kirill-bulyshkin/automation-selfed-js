@@ -1,0 +1,20 @@
+{
+  "name": "smart-vk-api",
+  "version": "1.0.0",
+  "description": "4th test task",
+  "main": "test.js",
+  "scripts": {
+    "test": "mocha --timeout 100000 ./project"
+  },
+  "author": "Kirill Bulyshkin",
+  "license": "ISC",
+  "devDependencies": {
+    "axios": "^0.21.1",
+    "chai": "^4.3.4",
+    "lodash": "^4.17.21",
+    "mocha": "^9.0.3"
+  },
+  "dependencies": {
+    "selenium-webdriver": "^4.0.0-beta.4"
+  }
+}
