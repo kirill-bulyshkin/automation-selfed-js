@@ -15,7 +15,10 @@ const testData = {
     'likesListExt': 1,
     'firstItem': 0,
     'expectedLikesCountValue': 1,
-    'expectedArrayLength': 0
+    'expectedArrayLength': 0,
+    'deletedPostIsNotDisplayed': false,
+    'rusWebSite': 'russian',
+    'engWebSite': 'english'
 };
 
 module.exports = {testData};
