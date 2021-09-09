@@ -8,12 +8,14 @@ const NavigationBarPage = require('../project/pages/navigationBarPage');
 const WallPage = require('../project/pages/wallPage');
 const VkApiUtils = require('../framework/utils/vkApiUtils');
 const Logger = require('../framework/utils/logger');
+const FormData = require('form-data');
+const fs = require('fs/promises');
 
 before(async () => {
    await Browser.init(testData.browserNameChrome);
 });
 
-it('TEST', async () => {
+it('VK sign in and operations with post', async () => {
     let postId;
     await Browser.navigate(testData.link);
     // await Browser.windowMaximize();
@@ -38,8 +40,27 @@ it('TEST', async () => {
     let wallPage = new WallPage();
     expect (await wallPage.getPostText(postId)).to.eql(randomText);
     expect (await wallPage.getPostAuthor(postId)).to.eql(testData.author)
+    let uploadUrl;
+    await VkApiUtils.getWallUploadServer(postId).then(res => {
+        uploadUrl = res.data.response.upload_url;
+    });
+    const image = await fs.readFile(testData.filePath);
+    const form = new FormData();
+    form.append(testData.formDataKey, image, testData.formDataValue);
+    let photo;
+    let server;
+    let hash;
+    await VkApiUtils.uploadPhotoToUrl(uploadUrl, form).then(res => {
+        photo = res.data.photo;
+        server = res.data.server;
+        hash = res.data.hash;
+    });
+    let photoId;
+    await VkApiUtils.saveWallPhoto(photo, server, hash).then(res => {
+        photoId = res.data.response[testData.arrayElement].id;
+    });
     const randomTextEdited = `${randomText} Edited`;
-    await VkApiUtils.editPost(postId, randomTextEdited);
+    await VkApiUtils.editPost(postId, randomTextEdited, photoId);
     await wallPage.waitingExpectedPostWithText(postId, randomTextEdited);
     expect (await wallPage.getPostText(postId)).to.eql(randomTextEdited);
     const randomComment = `Test Comment ${randomStr(testData.randomStringLength)}`;

@@ -11,14 +11,17 @@ const testData = {
     'vkApiLink': 'https://api.vk.com/method/',
     'randomStringLength': 5,
     'author': 'Иван Иванов',
-    'photoId': '457241942',
     'likesListExt': 1,
     'firstItem': 0,
     'expectedLikesCountValue': 1,
     'expectedArrayLength': 0,
     'deletedPostIsNotDisplayed': false,
     'rusWebSite': 'russian',
-    'engWebSite': 'english'
+    'engWebSite': 'english',
+    'filePath': './files/bear.jpg',
+    'formDataKey': 'photo',
+    'formDataValue': 'bear.jpg',
+    'arrayElement': 0
 };
 
 module.exports = {testData};

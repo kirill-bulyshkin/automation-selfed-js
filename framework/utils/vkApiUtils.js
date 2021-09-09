@@ -9,9 +9,9 @@ class VkApiUtils {
         return axios.post(`${testData.vkApiLink}wall.post?owner_id=${testData.userId}&message=${randomText}&access_token=${testData.token}&v=${testData.apiVersion}`)
     }
 
-    static async editPost(postId, editedText) {
+    static async editPost(postId, editedText, photoId) {
         Logger.infoLog(`Post editing`)
-        return axios.post(`${testData.vkApiLink}wall.edit?owner_id=${testData.userId}&post_id=${postId}&message=${editedText}&attachments=photo${testData.userId}_${testData.photoId}&access_token=${testData.token}&v=${testData.apiVersion}`)
+        return axios.post(`${testData.vkApiLink}wall.edit?owner_id=${testData.userId}&post_id=${postId}&message=${editedText}&attachments=photo${testData.userId}_${photoId}&access_token=${testData.token}&v=${testData.apiVersion}`)
     }
 
     static async addComment(postId, randomComment) {
@@ -27,6 +27,25 @@ class VkApiUtils {
     static async deletePost(postId) {
         Logger.infoLog(`Post deleting`)
         return axios.get(`${testData.vkApiLink}wall.delete?post_id=${postId}&owner_id=${testData.userId}&access_token=${testData.token}&v=${testData.apiVersion}`)
+    }
+
+    static async getWallUploadServer(postId) {
+        Logger.infoLog(`Getting server to upload photo`)
+        return axios.get(`${testData.vkApiLink}photos.getWallUploadServer?&owner_id=${testData.userId}?post_id=${postId}&access_token=${testData.token}&v=${testData.apiVersion}`)
+    }
+
+    static async uploadPhotoToUrl(uploadUrl, form) {
+        Logger.infoLog(`Uploading photo to URL`)
+        return axios.post(uploadUrl, form, {
+            headers: {
+                ...form.getHeaders()
+            }
+        })
+    }
+    
+    static async saveWallPhoto(photo, server, hash) {
+        Logger.infoLog(`Saving photo`)
+        return axios.post(`${testData.vkApiLink}photos.saveWallPhoto?&user_id=${testData.userId}&access_token=${testData.token}&v=${testData.apiVersion}&photo=${photo}&server=${server}&hash=${hash}`)
     }
 }
 

@@ -35,9 +35,6 @@ class WallPage extends BasePage {
         return new Button('nextCommentButton', locators.findNextCommentButton(postId));
     }
 
-
-
-
     async getPostText(postId) {
         return (await this.getPostTextField(postId)).getText();
     }
@@ -69,8 +66,6 @@ class WallPage extends BasePage {
     async deletedPostIsDisplayed(postId, expectedText) {
         return (await this.getPost(postId, expectedText)).elementIsDisplayed();
     }
-
-    
 
     async waitingExpectedPostWithText(postId, expectedText) {
         return Browser.wait(until.elementLocated(locators.findPostWithText(postId, expectedText)), 5000);
