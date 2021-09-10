@@ -21,7 +21,9 @@ const testData = {
     'filePath': './files/bear.jpg',
     'formDataKey': 'photo',
     'formDataValue': 'bear.jpg',
-    'arrayElement': 0
+    'arrayElement': 0,
+    'sizesElement': 6,
+    'misMatchPercentageValue': '0.00'
 };
 
 module.exports = {testData};

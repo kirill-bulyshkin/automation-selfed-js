@@ -10,6 +10,7 @@ const VkApiUtils = require('../framework/utils/vkApiUtils');
 const Logger = require('../framework/utils/logger');
 const FormData = require('form-data');
 const fs = require('fs/promises');
+const resemble = require('resemblejs');
 
 before(async () => {
    await Browser.init(testData.browserNameChrome);
@@ -18,7 +19,7 @@ before(async () => {
 it('VK sign in and operations with post', async () => {
     let postId;
     await Browser.navigate(testData.link);
-    // await Browser.windowMaximize();
+    await Browser.windowMaximize();
     let loginPage = new LoginPage();
     const webSiteLanguage = testData.rusWebSite;
     if (webSiteLanguage == testData.engWebSite) {
@@ -62,6 +63,15 @@ it('VK sign in and operations with post', async () => {
     const randomTextEdited = `${randomText} Edited`;
     await VkApiUtils.editPost(postId, randomTextEdited, photoId);
     await wallPage.waitingExpectedPostWithText(postId, randomTextEdited);
+    let uploadedPhotoUrl;
+    await VkApiUtils.getPhotoUrl(photoId).then(res => {
+        uploadedPhotoUrl = res.data.response[testData.arrayElement].sizes[testData.sizesElement].url;
+    });
+    resemble(image)
+    .compareTo(uploadedPhotoUrl)
+    .onComplete(function(data) {
+        expect (data.misMatchPercentage ).to.eql(testData.misMatchPercentageValue);
+    });
     expect (await wallPage.getPostText(postId)).to.eql(randomTextEdited);
     const randomComment = `Test Comment ${randomStr(testData.randomStringLength)}`;
     await VkApiUtils.addComment(postId, randomComment);
@@ -84,9 +94,8 @@ it('VK sign in and operations with post', async () => {
     expect (await wallPage.deletedPostIsDisplayed(postId, randomTextEdited)).to.eql(testData.deletedPostIsNotDisplayed);
 });
 
-
-// after(async () => {
-//     await Browser.driver.quit();
-// });
+after(async () => {
+    await Browser.driver.quit();
+});
 
 

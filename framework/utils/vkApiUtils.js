@@ -47,6 +47,11 @@ class VkApiUtils {
         Logger.infoLog(`Saving photo`)
         return axios.post(`${testData.vkApiLink}photos.saveWallPhoto?&user_id=${testData.userId}&access_token=${testData.token}&v=${testData.apiVersion}&photo=${photo}&server=${server}&hash=${hash}`)
     }
+
+    static async getPhotoUrl(photoId) {
+        Logger.infoLog(`Getting URL of the uploaded photo`)
+        return axios.get(`${testData.vkApiLink}photos.getById?photos=${testData.userId}_${photoId}&access_token=${testData.token}&v=${testData.apiVersion}`)
+    }
 }
 
 
