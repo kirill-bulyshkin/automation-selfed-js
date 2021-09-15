@@ -1,8 +1,7 @@
 const {Builder} = require('selenium-webdriver');
 const {testData} = require('../../testData/test.data');
-const fs = require('fs');
-const fetch = require('node-fetch');
 const Logger = require ('../utils/logger');
+const download = require('image-downloader')
 
 class Browser {
 
@@ -39,11 +38,11 @@ class Browser {
     }
 
     static async downloadImageByUrl(url, pathToFile) {
-        const response = await fetch(url);
-        const buffer = await response.buffer();
-        fs.writeFile(pathToFile, buffer, () => 
-        Logger.infoLog('Image is downloaded'));
+        const options = {url: url, dest: pathToFile};
+        await download.image(options);
+        Logger.infoLog('Image is downloaded');
     }
+
 }
 
 module.exports = Browser;
