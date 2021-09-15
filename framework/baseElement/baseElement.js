@@ -23,13 +23,10 @@ class BaseElement {
         return (await this.findElement()).getAttribute(attribute);
     }
 
-    async elementIsDisplayed() {
+    async isElementDisplayed() {
         return (await this.findElement()).isDisplayed();
     }
 
 }
 
 module.exports = BaseElement;
-
-
-

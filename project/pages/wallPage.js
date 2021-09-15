@@ -4,6 +4,7 @@ const Post = require("../../framework/baseElement/post");
 const Button = require("../../framework/baseElement/button");
 const Browser = require("../../framework/browser/browser");
 const {until} = require('selenium-webdriver');
+const { testData } = require("../../testData/test.data");
 
 class WallPage extends BasePage {
 
@@ -59,24 +60,20 @@ class WallPage extends BasePage {
         return (await this.getPostLikeButton(postId)).click();
     }
 
-    async tryToFindDeletedPost(postId) {
-        return this.findElements(locators.findPost(postId));
-    }
-
     async deletedPostIsDisplayed(postId, expectedText) {
-        return (await this.getPost(postId, expectedText)).elementIsDisplayed();
+        return (await this.getPost(postId, expectedText)).isElementDisplayed();
     }
 
     async waitingExpectedPostWithText(postId, expectedText) {
-        return Browser.wait(until.elementLocated(locators.findPostWithText(postId, expectedText)), 5000);
+        return Browser.wait(until.elementLocated(locators.findPostWithText(postId, expectedText)), testData.timeoutValue);
     }
 
     async waitingExpectedCommentWithText(postId, expectedText) {
-        return Browser.wait(until.elementLocated(locators.findCommentWithText(postId, expectedText)), 5000)
+        return Browser.wait(until.elementLocated(locators.findCommentWithText(postId, expectedText)), testData.timeoutValue);
     }
 
     async waitingPostIsNotVisible(postId, expectedText) {
-        return Browser.wait(until.elementIsNotVisible(await Browser.driver.findElement(locators.findPostWithText(postId, expectedText)), 5000));
+        return Browser.wait(until.elementIsNotVisible(await Browser.driver.findElement(locators.findPostWithText(postId, expectedText)), testData.timeoutValue));
     }
     
 }

@@ -1,5 +1,8 @@
 const {Builder} = require('selenium-webdriver');
 const {testData} = require('../../testData/test.data');
+const fs = require('fs');
+const fetch = require('node-fetch');
+const Logger = require ('../utils/logger');
 
 class Browser {
 
@@ -7,15 +10,19 @@ class Browser {
         this.driver = await new Builder().forBrowser(browserName).build();
     }
 
+    static async quit() {
+        await this.driver.quit();
+    }
+
     static async navigate(url) {
         await this.driver.get(url);
     }
 
-    static async goToFrame(framePath) {
+    static async switchToFrame(framePath) {
         return this.driver.switchTo().frame(this.driver.findElement(framePath));
     }
 
-    static async backFromFrame() {
+    static async switchToDefault() {
         return this.driver.switchTo().defaultContent();
     }
 
@@ -29,6 +36,13 @@ class Browser {
 
     static async wait(condition) {
         return this.driver.wait(condition)
+    }
+
+    static async downloadImageByUrl(url, pathToFile) {
+        const response = await fetch(url);
+        const buffer = await response.buffer();
+        fs.writeFile(pathToFile, buffer, () => 
+        Logger.infoLog('Image is downloaded'));
     }
 }
 

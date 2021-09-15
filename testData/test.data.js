@@ -15,15 +15,15 @@ const testData = {
     'firstItem': 0,
     'expectedLikesCountValue': 1,
     'expectedArrayLength': 0,
-    'deletedPostIsNotDisplayed': false,
     'rusWebSite': 'russian',
     'engWebSite': 'english',
     'filePath': './files/bear.jpg',
+    'pathToUploadedImage': './files/uploadedImage.jpg',
     'formDataKey': 'photo',
     'formDataValue': 'bear.jpg',
     'arrayElement': 0,
     'sizesElement': 6,
-    'misMatchPercentageValue': '0.00'
+    'expectedImageDifference': 0
 };
 
 module.exports = {testData};

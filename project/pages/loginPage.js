@@ -4,6 +4,7 @@ const TextArea = require("../../framework/baseElement/textArea");
 const Button = require("../../framework/baseElement/button");
 const Browser = require("../../framework/browser/browser");
 const {until} = require('selenium-webdriver');
+const { testData } = require("../../testData/test.data");
 
 class LoginPage extends BasePage {
     get loginField() {return new TextArea('loginField', locators.loginField);}
@@ -28,7 +29,7 @@ class LoginPage extends BasePage {
     }
 
     async waitingSwitchingToEnglish() {
-        return Browser.wait(until.elementLocated(locators.engLoginField), 8000);
+        return Browser.wait(until.elementLocated(locators.engLoginField), testData.timeoutValue);
     }
     
 }

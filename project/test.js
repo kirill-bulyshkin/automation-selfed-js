@@ -10,9 +10,9 @@ const VkApiUtils = require('../framework/utils/vkApiUtils');
 const Logger = require('../framework/utils/logger');
 const FormData = require('form-data');
 const fs = require('fs/promises');
-const resemble = require('resemblejs');
+const {imgDiff} = require("img-diff-js");
 
-before(async () => {
+beforeEach(async () => {
    await Browser.init(testData.browserNameChrome);
 });
 
@@ -32,7 +32,7 @@ it('VK sign in and operations with post', async () => {
     let navigationBarPage = new NavigationBarPage();
     await Browser.setTimeout();
     await navigationBarPage.myPageButtonClick();
-    const randomText = `QA test ${randomStr(testData.randomStringLength)}`;
+    const randomText = randomStr(testData.randomStringLength);
     await Logger.infoLog(`Generated text is ${randomText}`);
     await VkApiUtils.createPost(randomText).then(res => {
         postId = res.data.response.post_id;
@@ -60,18 +60,20 @@ it('VK sign in and operations with post', async () => {
     await VkApiUtils.saveWallPhoto(photo, server, hash).then(res => {
         photoId = res.data.response[testData.arrayElement].id;
     });
-    const randomTextEdited = `${randomText} Edited`;
+    const randomTextEdited = randomStr(testData.randomStringLength);
     await VkApiUtils.editPost(postId, randomTextEdited, photoId);
     await wallPage.waitingExpectedPostWithText(postId, randomTextEdited);
-    let uploadedPhotoUrl;
+    let uploadedImageUrl;
     await VkApiUtils.getPhotoUrl(photoId).then(res => {
-        uploadedPhotoUrl = res.data.response[testData.arrayElement].sizes[testData.sizesElement].url;
+        uploadedImageUrl = res.data.response[testData.arrayElement].sizes[testData.sizesElement].url;
     });
-    resemble(image)
-    .compareTo(uploadedPhotoUrl)
-    .onComplete(function(data) {
-        expect (data.misMatchPercentage ).to.eql(testData.misMatchPercentageValue);
-    });
+    await Browser.downloadImageByUrl(uploadedImageUrl, testData.pathToUploadedImage);
+    let imageDifference;
+    await imgDiff({
+        actualFilename: testData.filePath,
+        expectedFilename: testData.pathToUploadedImage,
+    }).then(result => imageDifference = result.diffCount);
+    expect (await imageDifference).to.eql(testData.expectedImageDifference);
     expect (await wallPage.getPostText(postId)).to.eql(randomTextEdited);
     const randomComment = `Test Comment ${randomStr(testData.randomStringLength)}`;
     await VkApiUtils.addComment(postId, randomComment);
@@ -91,11 +93,11 @@ it('VK sign in and operations with post', async () => {
     expect (`${likeFromFirstName} ${likeFromLastName}`).to.eql(testData.author);
     await VkApiUtils.deletePost(postId);
     await wallPage.waitingPostIsNotVisible(postId, randomTextEdited);
-    expect (await wallPage.deletedPostIsDisplayed(postId, randomTextEdited)).to.eql(testData.deletedPostIsNotDisplayed);
+    expect (await wallPage.deletedPostIsDisplayed(postId, randomTextEdited)).to.be.false;
 });
 
-after(async () => {
-    await Browser.driver.quit();
+afterEach(async () => {
+    await Browser.quit();
 });
 
 
