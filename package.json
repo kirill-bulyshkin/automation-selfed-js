@@ -11,6 +11,8 @@
   "devDependencies": {
     "axios": "^0.21.1",
     "chai": "^4.3.4",
+    "chromedriver": "^93.0.1",
+    "geckodriver": "^2.0.4",
     "image-downloader": "^4.0.3",
     "img-diff-js": "^0.5.2",
     "lodash": "^4.17.21",

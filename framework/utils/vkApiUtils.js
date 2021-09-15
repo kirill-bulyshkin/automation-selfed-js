@@ -6,7 +6,9 @@ class VkApiUtils {
 
     static async createPost(randomText) {
         Logger.infoLog(`Post creating`)
-        return axios.post(`${testData.vkApiLink}wall.post?owner_id=${testData.userId}&message=${randomText}&access_token=${testData.token}&v=${testData.apiVersion}`)
+        const res = await axios.post(`${testData.vkApiLink}wall.post?owner_id=${testData.userId}&message=${randomText}&access_token=${testData.token}&v=${testData.apiVersion}`);
+        const postId = await res.data.response.post_id;
+        return postId;
     }
 
     static async editPost(postId, editedText, photoId) {
@@ -21,7 +23,11 @@ class VkApiUtils {
 
     static async getPostLikes(postId) {
         Logger.infoLog(`Getting post likes`)
-        return axios.get(`${testData.vkApiLink}likes.getList?type=post&owner_id=${testData.userId}&item_id=${postId}&access_token=${testData.token}&v=${testData.apiVersion}&extended=${testData.likesListExt}`)
+        const res = await axios.get(`${testData.vkApiLink}likes.getList?type=post&owner_id=${testData.userId}&item_id=${postId}&access_token=${testData.token}&v=${testData.apiVersion}&extended=${testData.likesListExt}`);
+        const likesCountValue = res.data.response.count;
+        const likeFromFirstName = res.data.response.items[testData.firstItem].first_name;
+        const likeFromLastName = res.data.response.items[testData.firstItem].last_name;
+        return {likesCountValue, likeFromFirstName, likeFromLastName};
     }
 
     static async deletePost(postId) {
@@ -31,26 +37,36 @@ class VkApiUtils {
 
     static async getWallUploadServer(postId) {
         Logger.infoLog(`Getting server to upload photo`)
-        return axios.get(`${testData.vkApiLink}photos.getWallUploadServer?&owner_id=${testData.userId}?post_id=${postId}&access_token=${testData.token}&v=${testData.apiVersion}`)
+        const res = await axios.get(`${testData.vkApiLink}photos.getWallUploadServer?&owner_id=${testData.userId}?post_id=${postId}&access_token=${testData.token}&v=${testData.apiVersion}`);
+        const uploadUrl = res.data.response.upload_url;
+        return uploadUrl;
     }
 
     static async uploadPhotoToUrl(uploadUrl, form) {
         Logger.infoLog(`Uploading photo to URL`)
-        return axios.post(uploadUrl, form, {
+        const res = await axios.post(uploadUrl, form, {
             headers: {
                 ...form.getHeaders()
             }
         })
+        const photo = res.data.photo;
+        const server = res.data.server;
+        const hash = res.data.hash;
+        return {photo, server, hash};
     }
     
     static async saveWallPhoto(photo, server, hash) {
         Logger.infoLog(`Saving photo`)
-        return axios.post(`${testData.vkApiLink}photos.saveWallPhoto?&user_id=${testData.userId}&access_token=${testData.token}&v=${testData.apiVersion}&photo=${photo}&server=${server}&hash=${hash}`)
+        const res = await axios.post(`${testData.vkApiLink}photos.saveWallPhoto?&user_id=${testData.userId}&access_token=${testData.token}&v=${testData.apiVersion}&photo=${photo}&server=${server}&hash=${hash}`);
+        const photoId = res.data.response[testData.arrayElement].id;
+        return photoId;
     }
 
     static async getPhotoUrl(photoId) {
         Logger.infoLog(`Getting URL of the uploaded photo`)
-        return axios.get(`${testData.vkApiLink}photos.getById?photos=${testData.userId}_${photoId}&access_token=${testData.token}&v=${testData.apiVersion}`)
+        const res = await axios.get(`${testData.vkApiLink}photos.getById?photos=${testData.userId}_${photoId}&access_token=${testData.token}&v=${testData.apiVersion}`);
+        const uploadedImageUrl = res.data.response[testData.arrayElement].sizes[testData.sizesElement].url;
+        return uploadedImageUrl;
     }
 }
 
