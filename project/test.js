@@ -1,6 +1,5 @@
 const {expect} = require('chai');
 const {testData} = require('../testData/test.data');
-const {locators} = require('../project/locators/locators');
 const {randomStr} = require('../framework/utils/randomGenerator');
 const Browser = require('../framework/browser/browser');
 const LoginPage = require('../project/pages/loginPage');
@@ -20,11 +19,6 @@ it('VK sign in and operations with post', async () => {
     await Browser.navigate(testData.link);
     await Browser.windowMaximize();
     let loginPage = new LoginPage();
-    const webSiteLanguage = testData.rusWebSite;
-    if (webSiteLanguage == testData.engWebSite) {
-        await loginPage.setWebsiteLanguage(locators.engLanguage);
-        await loginPage.waitingSwitchingToEnglish();
-    };
     await loginPage.setLoginValue(testData.login);
     await loginPage.setPasswordValue(testData.password);
     await loginPage.loginButtonClick();
@@ -36,8 +30,9 @@ it('VK sign in and operations with post', async () => {
     const postId = await VkApiUtils.createPost(randomText);
     await Logger.infoLog(`Post ID of the created post is ${postId}`);
     let wallPage = new WallPage();
-    expect (await wallPage.getPostText(postId)).to.eql(randomText);
-    expect (await wallPage.getPostAuthor(postId)).to.eql(testData.author)
+    const author = await wallPage._getAuthorText();
+    expect (await wallPage._getPostText(postId)).to.eql(randomText);
+    expect (await wallPage._getPostAuthor(postId)).to.eql(author)
     const uploadUrl = await VkApiUtils.getWallUploadServer(postId);;
     const image = await fs.readFile(testData.filePath);
     const form = new FormData();
@@ -54,19 +49,19 @@ it('VK sign in and operations with post', async () => {
     await Browser.downloadImageByUrl(uploadedImageUrl, testData.pathToUploadedImage);
     const imageDifference = await imagesComparing();
     expect (await imageDifference).to.eql(testData.expectedImageDifference);
-    expect (await wallPage.getPostText(postId)).to.eql(randomTextEdited);
+    expect (await wallPage._getPostText(postId)).to.eql(randomTextEdited);
     const randomComment = `Test Comment ${randomStr(testData.randomStringLength)}`;
     await VkApiUtils.addComment(postId, randomComment);
     await wallPage.clickNextCommentButton(postId);
     expect (await wallPage.getPostCommentText(postId)).to.eql(randomComment);
-    expect (await wallPage.getPostCommentAuthor(postId)).to.eql(testData.author);
+    expect (await wallPage.getPostCommentAuthor(postId)).to.eql(author);
     await wallPage.clickLikeButton(postId);
     const returnedLikesData = await VkApiUtils.getPostLikes(postId);
     const likesCountValue = returnedLikesData.likesCountValue;
     const likeFromFirstName = returnedLikesData.likeFromFirstName;
     const likeFromLastName = returnedLikesData.likeFromLastName;
     expect (likesCountValue).to.eql(testData.expectedLikesCountValue);
-    expect (`${likeFromFirstName} ${likeFromLastName}`).to.eql(testData.author);
+    expect (`${likeFromFirstName} ${likeFromLastName}`).to.eql(author);
     await VkApiUtils.deletePost(postId);
     await wallPage.waitingPostIsNotVisible(postId, randomTextEdited);
     expect (await wallPage.deletedPostIsDisplayed(postId, randomTextEdited)).to.be.false;

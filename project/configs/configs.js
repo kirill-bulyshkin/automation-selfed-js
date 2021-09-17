@@ -1,5 +1,4 @@
-const browserLanguage = {
-    
-};
+//Possible values {'rus', 'eng'}
+const browserLanguage = 'eng';
 
-module.exports = {};
+module.exports = {browserLanguage};

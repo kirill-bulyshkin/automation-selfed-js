@@ -10,7 +10,6 @@ const testData = {
     'timeoutValue': 8000,
     'vkApiLink': 'https://api.vk.com/method/',
     'randomStringLength': 5,
-    'author': 'Иван Иванов',
     'likesListExt': 1,
     'firstItem': 0,
     'expectedLikesCountValue': 1,

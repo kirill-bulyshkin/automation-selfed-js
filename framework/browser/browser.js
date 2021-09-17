@@ -1,12 +1,20 @@
-const {Builder} = require('selenium-webdriver');
+const {Builder, Capabilities} = require('selenium-webdriver');
 const {testData} = require('../../testData/test.data');
 const Logger = require ('../utils/logger');
-const download = require('image-downloader')
+const download = require('image-downloader');
+const {browserLanguage} = require('../../project/configs/configs');
+let chromeCapabilities = Capabilities.chrome();
+
+if (browserLanguage == 'eng') {
+    chromeCapabilities.set("goog:chromeOptions", {
+        args: ["--lang=en"]
+    });
+}
 
 class Browser {
 
     static async init(browserName) {
-        this.driver = await new Builder().forBrowser(browserName).build();
+        this.driver = await new Builder().forBrowser(browserName).withCapabilities(chromeCapabilities).build();
     }
 
     static async quit() {
