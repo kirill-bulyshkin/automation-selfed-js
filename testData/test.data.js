@@ -1,6 +1,4 @@
 const testData = {
-    'browserNameChrome': 'chrome',
-    'browserNameFirefox': 'firefox',
     'link': 'https://vk.com',
     'login': '+375291660762',
     'password': 'PuV6j_.2&$m9h?UYY',

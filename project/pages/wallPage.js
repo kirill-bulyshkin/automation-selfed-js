@@ -6,6 +6,7 @@ const Label = require("../../framework/baseElement/label");
 const Browser = require("../../framework/browser/browser");
 const {until} = require('selenium-webdriver');
 const {testData} = require("../../testData/test.data");
+const Logger = require('../../framework/utils/logger');
 
 class WallPage extends BasePage {
 
@@ -41,35 +42,43 @@ class WallPage extends BasePage {
         return new Button('nextCommentButton', locators.findNextCommentButton(postId));
     }
 
-    async _getAuthorText() {
+    async getAuthorText() {
+        Logger.infoLog('Getting Author');
         return (await this._getAuthorField()).getText();
     }
 
-    async _getPostText(postId) {
+    async getPostText(postId) {
+        Logger.infoLog('Getting text of post');
         return (await this._getPostTextField(postId)).getText();
     }
 
-    async _getPostAuthor(postId) {
+    async getPostAuthor(postId) {
+        Logger.infoLog('Getting Author of post');
         return (await this._getPostAuthorField(postId)).getText();
     }
 
     async clickNextCommentButton(postId) {
+        Logger.infoLog('Click on next comment button');
         return (await this._getNextCommentButton(postId)).click();
     }
 
     async getPostCommentText(postId) {
+        Logger.infoLog('Getting text of post comment');
         return (await this._getPostCommentField(postId)).getText();
     }
 
     async getPostCommentAuthor(postId) {
+        Logger.infoLog('Getting post comment author');
         return (await this._getPostCommentAuthorField(postId)).getText();
     }
 
     async clickLikeButton(postId) {
+        Logger.infoLog('Click on like button');
         return (await this._getPostLikeButton(postId)).click();
     }
 
     async deletedPostIsDisplayed(postId, expectedText) {
+        Logger.infoLog('Checking displaying of deleted post');
         return (await this._getPost(postId, expectedText)).isElementDisplayed();
     }
 

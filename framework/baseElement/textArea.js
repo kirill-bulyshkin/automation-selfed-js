@@ -1,12 +1,15 @@
-const BaseElement = require("./baseElement");
+const BaseElement = require('./baseElement');
+const Logger = require('../utils/logger');
 
 class TextArea extends BaseElement {
 
     async clearValue() {
-       return (await this.findElement()).clear();
+        Logger.infoLog('Clearing text area');
+        return (await this.findElement()).clear();
     }
 
     async setValue(value) {
+        Logger.infoLog('Set value to text area');
         return (await this.findElement()).sendKeys(value);
     }
 }

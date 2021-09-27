@@ -1,4 +1,7 @@
 //Possible values {'rus', 'eng'}
 const browserLanguage = 'eng';
 
-module.exports = {browserLanguage};
+//Possible values {'chrome', 'firefox'}
+const browserName = 'chrome';
+
+module.exports = {browserLanguage, browserName};
