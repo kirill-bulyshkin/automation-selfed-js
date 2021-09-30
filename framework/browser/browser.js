@@ -1,12 +1,13 @@
 const {Builder, Capabilities} = require('selenium-webdriver');
+const firefox = require('selenium-webdriver/firefox');
 const {testData} = require('../../testData/test.data');
 const Logger = require ('../utils/logger');
 const {browserLanguage} = require('../../project/configs/configs');
 
 class Browser {
 
-    static async init(browserName) {
-        Logger.infoLog('Browser initialization');
+    static async initChrome(browserName) {
+        Logger.infoLog('Chrome browser initialization');
         let chromeCapabilities = Capabilities.chrome();
         if (browserLanguage == 'eng') {
             chromeCapabilities.set("goog:chromeOptions", {
@@ -19,6 +20,18 @@ class Browser {
             });
         };
         this.driver = await new Builder().forBrowser(browserName).withCapabilities(chromeCapabilities).build();
+    }
+    
+    static async initFirefox(browserName) {
+        Logger.infoLog('Firefox browser initialization');
+        let options;
+        if (browserLanguage == 'eng') {
+            options = new firefox.Options().setPreference("intl.accept_languages", "en,en-US");
+        };
+        if (browserLanguage == 'rus') {
+            options = new firefox.Options().setPreference("intl.accept_languages", "ru,ru-RU");
+        };
+        this.driver = await new Builder().forBrowser(browserName).setFirefoxOptions(options).build();
     }
 
     static async quit() {

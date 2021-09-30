@@ -1,5 +1,5 @@
 //Possible values {'rus', 'eng'}
-const browserLanguage = 'eng';
+const browserLanguage = 'rus';
 
 //Possible values {'chrome', 'firefox'}
 const browserName = 'firefox';
