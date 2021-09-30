@@ -6,14 +6,14 @@ const axios = require('axios');
 class VkApiUtils {
 
     static async createPost(randomText) {
-        Logger.infoLog(`Post creating`);
+        Logger.infoLog(`Create post with text '${randomText}'`);
         const res = await axios.post(requests.createPost(randomText));
         const postId = await res.data.response.post_id;
         return postId;
     }
 
     static async editPost(postId, editedText, photoId) {
-        Logger.infoLog(`Post editing`);
+        Logger.infoLog(`Editing post with ID '${postId}'`);
         return axios.post(requests.editPost(postId, editedText, photoId));
     }
 
@@ -44,7 +44,7 @@ class VkApiUtils {
     }
 
     static async uploadPhotoToUrl(uploadUrl, form) {
-        Logger.infoLog(`Uploading photo to URL`);
+        Logger.infoLog(`Uploading photo to ${uploadUrl}`);
         const res = await axios.post(uploadUrl, form, {headers: {...form.getHeaders()}});
         const photo = res.data.photo;
         const server = res.data.server;

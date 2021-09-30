@@ -9,7 +9,7 @@ class BaseElement {
     }
 
     async findElement() {
-        Logger.infoLog('Finding element');
+        Logger.infoLog(`Finding element ${this.locator}`);
         return Browser.driver.findElement(this.locator);
     }
 

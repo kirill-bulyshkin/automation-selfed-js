@@ -1,13 +1,13 @@
 const BasePage = require('../../framework/basePage/basePage');
-const {locators} = require('../locators/locators');
+const {loginPageLocators} = require('../locators/loginPageLocators');
 const TextArea = require('../../framework/baseElement/textArea');
 const Button = require('../../framework/baseElement/button');
 const Logger = require('../../framework/utils/logger');
 
 class LoginPage extends BasePage {
-    get loginField() {return new TextArea('loginField', locators.loginField);}
-    get passwordField() {return new TextArea('passwordField', locators.passwordField);}
-    get loginButton() {return new Button('loginButton', locators.loginButton);}
+    get loginField() {return new TextArea('loginField', loginPageLocators.loginField);}
+    get passwordField() {return new TextArea('passwordField', loginPageLocators.passwordField);}
+    get loginButton() {return new Button('loginButton', loginPageLocators.loginButton);}
     async getWebsiteLanguageButton(languageLocator) {return new Button('websiteLanguageButton', languageLocator);}
 
     async setLoginValue(value) {

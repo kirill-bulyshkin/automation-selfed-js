@@ -2,19 +2,15 @@ const {expect} = require('chai');
 const {testData} = require('../testData/test.data');
 const RandomGenerators = require('../framework/utils/randomGenerator');
 const Browser = require('../framework/browser/browser');
-const LoginPage = require('../project/pages/loginPage');
-const NavigationBarPage = require('../project/pages/navigationBarPage');
-const WallPage = require('../project/pages/wallPage');
+const LoginPage = require('./pages/loginPage');
+const NavigationBarPage = require('./pages/navigationBarPage');
+const WallPage = require('./pages/wallPage');
 const VkApiUtils = require('../framework/utils/vkApiUtils');
 const Logger = require('../framework/utils/logger');
 const FormData = require('form-data');
 const fs = require('fs/promises');
 const ImageUtils = require('../framework/utils/imagesComparing');
 const DownloadUtils = require('../framework/utils/downloadUtils');
-const Hooks = require('../project/hooks/hooks');
-
-let hooks = new Hooks();
-hooks.beforeEach();
 
 it('VK sign in and operations with post', async () => {
     await Browser.navigate(testData.link);
@@ -70,5 +66,3 @@ it('VK sign in and operations with post', async () => {
     await wallPage.waitingPostIsNotVisible(postId, randomTextEdited);
     expect (await wallPage.deletedPostIsDisplayed(postId, randomTextEdited)).to.be.false;
 });
-
-hooks.afterEach();

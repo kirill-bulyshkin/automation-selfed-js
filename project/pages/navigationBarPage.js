@@ -1,11 +1,11 @@
 const BasePage = require('../../framework/basePage/basePage');
-const {locators} = require('../locators/locators');
+const {navigationBarPageLocators} = require('../locators/navigationBarPageLocators');
 const Button = require('../../framework/baseElement/button');
 const Logger = require('../../framework/utils/logger');
 
 class NavigationBarPage extends BasePage {
 
-    get myPageButton() {return new Button('myPageButton', locators.myPageButton);}
+    get myPageButton() {return new Button('myPageButton', navigationBarPageLocators.myPageButton);}
 
     async myPageButtonClick() {
         Logger.infoLog('Click on My Page Button');

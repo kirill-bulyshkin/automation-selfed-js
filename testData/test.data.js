@@ -12,8 +12,6 @@ const testData = {
     'firstItem': 0,
     'expectedLikesCountValue': 1,
     'expectedArrayLength': 0,
-    'rusWebSite': 'russian',
-    'engWebSite': 'english',
     'filePath': './files/bear.jpg',
     'pathToUploadedImage': './files/uploadedImage.jpg',
     'formDataKey': 'photo',

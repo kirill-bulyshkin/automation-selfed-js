@@ -1,5 +1,5 @@
 const BasePage = require("../../framework/basePage/basePage");
-const {locators} = require("../locators/locators");
+const {wallPageLocators} = require("../locators/wallPageLocators");
 const Post = require("../../framework/baseElement/post");
 const Button = require("../../framework/baseElement/button");
 const Label = require("../../framework/baseElement/label");
@@ -11,35 +11,35 @@ const Logger = require('../../framework/utils/logger');
 class WallPage extends BasePage {
 
     async _getAuthorField() {
-        return new Label('authorField', locators.authorField);
+        return new Label('authorField', wallPageLocators.authorField);
     }
 
     async _getPost(postId, expectedText) {
-        return new Post('post', locators.findPostWithText(postId, expectedText));
+        return new Post('post', wallPageLocators.findPostWithText(postId, expectedText));
     }
 
     async _getPostTextField(postId) {
-        return new Post('postTextField', locators.findPostTextField(postId));
+        return new Post('postTextField', wallPageLocators.findPostTextField(postId));
     }
 
     async _getPostAuthorField(postId) {
-        return new Post('postAuthorField', locators.findPostAuthorField(postId));
+        return new Post('postAuthorField', wallPageLocators.findPostAuthorField(postId));
     }
 
     async _getPostCommentField(postId) {
-        return new Post('postCommentField', locators.findPostCommentField(postId));
+        return new Post('postCommentField', wallPageLocators.findPostCommentField(postId));
     }
 
     async _getPostCommentAuthorField(postId) {
-        return new Post('postCommentAuthorField', locators.findPostCommentAuthorField(postId));
+        return new Post('postCommentAuthorField', wallPageLocators.findPostCommentAuthorField(postId));
     }
 
     async _getPostLikeButton(postId) {
-        return new Button('postLikeButton', locators.findPostLikeButton(postId));
+        return new Button('postLikeButton', wallPageLocators.findPostLikeButton(postId));
     }
 
     async _getNextCommentButton(postId) {
-        return new Button('nextCommentButton', locators.findNextCommentButton(postId));
+        return new Button('nextCommentButton', wallPageLocators.findNextCommentButton(postId));
     }
 
     async getAuthorText() {
@@ -83,15 +83,15 @@ class WallPage extends BasePage {
     }
 
     async waitingExpectedPostWithText(postId, expectedText) {
-        return Browser.wait(until.elementLocated(locators.findPostWithText(postId, expectedText)), testData.timeoutValue);
+        return Browser.wait(until.elementLocated(wallPageLocators.findPostWithText(postId, expectedText)), testData.timeoutValue);
     }
 
     async waitingExpectedCommentWithText(postId, expectedText) {
-        return Browser.wait(until.elementLocated(locators.findCommentWithText(postId, expectedText)), testData.timeoutValue);
+        return Browser.wait(until.elementLocated(wallPageLocators.findCommentWithText(postId, expectedText)), testData.timeoutValue);
     }
 
     async waitingPostIsNotVisible(postId, expectedText) {
-        return Browser.wait(until.elementIsNotVisible(await Browser.driver.findElement(locators.findPostWithText(postId, expectedText)), testData.timeoutValue));
+        return Browser.wait(until.elementIsNotVisible(await Browser.driver.findElement(wallPageLocators.findPostWithText(postId, expectedText)), testData.timeoutValue));
     }
     
 }

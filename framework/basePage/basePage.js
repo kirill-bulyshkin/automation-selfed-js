@@ -7,7 +7,7 @@ class BasePage {
     }
 
     async findElements(locator) {
-        Logger.infoLog('Finding elements');
+        Logger.infoLog(`Finding elements ${locator}`);
         return Browser.driver.findElements(locator);
     }
 
