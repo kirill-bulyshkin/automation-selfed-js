@@ -48,7 +48,7 @@ class WallPage extends BasePage {
     }
 
     async getPostText(postId) {
-        Logger.infoLog('Getting text of post');
+        Logger.infoLog(`Getting text of post ${postId}`);
         return (await this._getPostTextField(postId)).getText();
     }
 

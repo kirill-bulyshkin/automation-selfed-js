@@ -1,17 +1,9 @@
 const Browser = require('../framework/browser/browser');
-const configs = require('../project/configs/configs');
+const configs = require('../project/configs/configs.json');
 
-if (configs.browserName == 'firefox') {
-    beforeEach(async () => {
-        await Browser.initFirefox(configs.browserName);
-    });
-};
-
-if (configs.browserName == 'chrome') {
-    beforeEach(async () => {
-        await Browser.initChrome(configs.browserName);
-    });
-};
+beforeEach(async () => {
+    await Browser.initBrowser(configs.browserName);
+});
 
 afterEach(async () => {
     await Browser.quit();

@@ -108,3 +108,6 @@ package-lock.json
 
 #VS code configs
 .vscode
+
+#Folder with uploaded files
+uploadedFiles/

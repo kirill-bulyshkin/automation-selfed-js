@@ -18,12 +18,12 @@ class VkApiUtils {
     }
 
     static async addComment(postId, randomComment) {
-        Logger.infoLog(`Adding comment`);
+        Logger.infoLog(`Adding comment to the post ${postId}`);
         return axios.get(requests.addComment(postId, randomComment));
     }
 
     static async getPostLikes(postId) {
-        Logger.infoLog(`Getting post likes`);
+        Logger.infoLog(`Getting post likes of the post ${postId}`);
         const res = await axios.get(requests.getPostLikes(postId));
         const likesCountValue = res.data.response.count;
         const likeFromFirstName = res.data.response.items[testData.firstItem].first_name;
@@ -32,12 +32,12 @@ class VkApiUtils {
     }
 
     static async deletePost(postId) {
-        Logger.infoLog(`Post deleting`);
+        Logger.infoLog(`Post deleting ${postId}`);
         return axios.get(requests.deletePost(postId));
     }
 
     static async getWallUploadServer(postId) {
-        Logger.infoLog(`Getting server to upload photo`);
+        Logger.infoLog(`Getting server to upload photo to the post ${postId}`);
         const res = await axios.get(requests.getWallUploadServer(postId));
         const uploadUrl = res.data.response.upload_url;
         return uploadUrl;
@@ -53,14 +53,14 @@ class VkApiUtils {
     }
     
     static async saveWallPhoto(photo, server, hash) {
-        Logger.infoLog(`Saving photo`);
+        Logger.infoLog(`Saving photo ${photo}`);
         const res = await axios.post(requests.saveWallPhoto(photo, server, hash));
         const photoId = res.data.response[testData.arrayElement].id;
         return photoId;
     }
 
     static async getPhotoUrl(photoId) {
-        Logger.infoLog(`Getting URL of the uploaded photo`);
+        Logger.infoLog(`Getting URL of the uploaded photo ${photoId}`);
         const res = await axios.get(requests.getPhotoUrl(photoId));
         const uploadedImageUrl = res.data.response[testData.arrayElement].sizes[testData.sizesElement].url;
         return uploadedImageUrl;

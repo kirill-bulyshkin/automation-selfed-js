@@ -14,22 +14,22 @@ class BaseElement {
     }
 
     async click() {
-        Logger.infoLog('Click on element');
+        Logger.infoLog(`Click on element ${this.name}`);
         return (await this.findElement()).click();
     }
 
     async getText() {
-        Logger.infoLog('Getting text of element');
+        Logger.infoLog(`Getting text of element ${this.name}`);
         return (await this.findElement()).getText();
     }
 
     async getAttribute(attribute) {
-        Logger.infoLog('Getting attribute of element');
+        Logger.infoLog(`Getting attribute of element ${this.name}`);
         return (await this.findElement()).getAttribute(attribute);
     }
 
     async isElementDisplayed() {
-        Logger.infoLog('Checking displaying of element');
+        Logger.infoLog(`Checking displaying of element ${this.name}`);
         return (await this.findElement()).isDisplayed();
     }
 
