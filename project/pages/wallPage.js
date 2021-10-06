@@ -82,8 +82,13 @@ class WallPage extends BasePage {
         return (await this._getPost(postId, expectedText)).isElementDisplayed();
     }
 
-    async waitingExpectedPostWithText(postId, expectedText) {
+    async waitingPostWithText(postId, expectedText) {
+        Logger.infoLog(`Waiting edited post ${postId} with expected text ${expectedText}`);
         return Browser.wait(until.elementLocated(wallPageLocators.findPostWithText(postId, expectedText)), testData.timeoutValue);
+    }
+
+    async waitingNextCommentButton(postId) {
+        return Browser.wait(until.elementLocated(wallPageLocators.findNextCommentButton(postId)), testData.timeoutValue);
     }
 
     async waitingExpectedCommentWithText(postId, expectedText) {

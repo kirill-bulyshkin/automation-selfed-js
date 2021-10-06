@@ -5,7 +5,7 @@ const testData = {
     'token': 'ba8efbc9ceb02cfbdeeb54cdb7776afb97943105c7f14a42ce4ff32ddd0b3196de930233af6c29ea1a846',
     'userId': '627657327',
     'apiVersion': '5.131',
-    'timeoutValue': 8000,
+    'timeoutValue': 100000,
     'vkApiLink': 'https://api.vk.com/method/',
     'randomStringLength': 5,
     'likesListExt': 1,
