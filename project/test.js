@@ -16,9 +16,7 @@ it('VK sign in and operations with post', async () => {
     await Browser.navigate(testData.link);
     await Browser.windowMaximize();
     const loginPage = new LoginPage();
-    await loginPage.setLoginValue(testData.login);
-    await loginPage.setPasswordValue(testData.password);
-    await loginPage.loginButtonClick();
+    await loginPage.authorize(testData.login, testData.password);
     const navigationBarPage = new NavigationBarPage();
     await navigationBarPage.waitingMyPageButton();
     await navigationBarPage.myPageButtonClick();
@@ -35,10 +33,7 @@ it('VK sign in and operations with post', async () => {
     const image = await fs.readFile(testData.filePath);
     const form = new FormData();
     form.append(testData.formDataKey, image, testData.formDataValue);
-    const returnedDataOfUploadedPhoto = await VkApiUtils.uploadPhotoToUrl(uploadUrl, form);
-    const photo = returnedDataOfUploadedPhoto.photo;
-    const server = returnedDataOfUploadedPhoto.server;
-    const hash = returnedDataOfUploadedPhoto.hash;
+    let {photo, server, hash} = await VkApiUtils.uploadPhotoToUrl(uploadUrl, form);
     const photoId = await VkApiUtils.saveWallPhoto(photo, server, hash);
     const randomTextEdited = RandomGenerators.randomStr(testData.randomStringLength);
     await VkApiUtils.editPost(postId, randomTextEdited, photoId);

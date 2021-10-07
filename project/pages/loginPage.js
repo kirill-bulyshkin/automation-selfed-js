@@ -9,14 +9,20 @@ class LoginPage extends BasePage {
     get passwordField() {return new TextArea('passwordField', loginPageLocators.passwordField);}
     get loginButton() {return new Button('loginButton', loginPageLocators.loginButton);}
 
-    async setLoginValue(value) {
-        Logger.infoLog(`Set value to login field '${value}'`);
-        return this.loginField.setValue(value)
+    async authorize(login, password) {
+        this.setLoginValue(login);
+        this.setPasswordValue(password);
+        this.loginButtonClick(); 
     }
 
-    async setPasswordValue(value) {
-        Logger.infoLog(`Set value to password field '${value}'`);
-        return this.passwordField.setValue(value)
+    async setLoginValue(login) {
+        Logger.infoLog(`Set value to login field '${login}'`);
+        return this.loginField.setValue(login)
+    }
+
+    async setPasswordValue(password) {
+        Logger.infoLog(`Set value to password field '${password}'`);
+        return this.passwordField.setValue(password)
     }
 
     async loginButtonClick() {

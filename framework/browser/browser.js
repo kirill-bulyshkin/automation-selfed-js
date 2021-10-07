@@ -1,3 +1,5 @@
+require('chromedriver');
+require('geckodriver');
 const {Builder, Capabilities} = require('selenium-webdriver');
 const firefox = require('selenium-webdriver/firefox');
 const {testData} = require('../../testData/test.data');

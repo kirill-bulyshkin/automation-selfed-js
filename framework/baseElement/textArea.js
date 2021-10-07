@@ -9,7 +9,7 @@ class TextArea extends BaseElement {
     }
 
     async setValue(value) {
-        Logger.infoLog('Set value to text area');
+        Logger.infoLog(`Set value '${value}' to text area`);
         return (await this.findElement()).sendKeys(value);
     }
 }

@@ -12,7 +12,7 @@ class BasePage {
     }
 
     async isDisplayed() {
-        Logger.infoLog('Checking displaying of element');
+        Logger.infoLog(`Checking displaying of page ${this.uniqueLocator}`);
         return Browser.driver.findElement(this.uniqueLocator).isDisplayed();
     }
 }

@@ -7,8 +7,7 @@ class VkApiUtils {
 
     static async createPost(randomText) {
         Logger.infoLog(`Create post with text '${randomText}'`);
-        const res = await axios.post(requests.createPost(randomText));
-        const postId = await res.data.response.post_id;
+        const postId = (await axios.post(requests.createPost(randomText))).data.response.post_id;
         return postId;
     }
 
@@ -38,31 +37,25 @@ class VkApiUtils {
 
     static async getWallUploadServer(postId) {
         Logger.infoLog(`Getting server to upload photo to the post ${postId}`);
-        const res = await axios.get(requests.getWallUploadServer(postId));
-        const uploadUrl = res.data.response.upload_url;
+        const uploadUrl = (await axios.get(requests.getWallUploadServer(postId))).data.response.upload_url;
         return uploadUrl;
     }
 
     static async uploadPhotoToUrl(uploadUrl, form) {
         Logger.infoLog(`Uploading photo to ${uploadUrl}`);
-        const res = await axios.post(uploadUrl, form, {headers: {...form.getHeaders()}});
-        const photo = res.data.photo;
-        const server = res.data.server;
-        const hash = res.data.hash;
+        let {photo, server, hash} = (await axios.post(uploadUrl, form, {headers: {...form.getHeaders()}})).data;
         return {photo, server, hash};
     }
     
     static async saveWallPhoto(photo, server, hash) {
         Logger.infoLog(`Saving photo ${photo}`);
-        const res = await axios.post(requests.saveWallPhoto(photo, server, hash));
-        const photoId = res.data.response[testData.arrayElement].id;
+        const photoId = (await axios.post(requests.saveWallPhoto(photo, server, hash))).data.response[testData.arrayElement].id;
         return photoId;
     }
 
     static async getPhotoUrl(photoId) {
         Logger.infoLog(`Getting URL of the uploaded photo ${photoId}`);
-        const res = await axios.get(requests.getPhotoUrl(photoId));
-        const uploadedImageUrl = res.data.response[testData.arrayElement].sizes[testData.sizesElement].url;
+        const uploadedImageUrl = (await axios.get(requests.getPhotoUrl(photoId))).data.response[testData.arrayElement].sizes[testData.sizesElement].url;
         return uploadedImageUrl;
     }
 }
