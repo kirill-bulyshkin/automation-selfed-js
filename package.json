@@ -11,6 +11,7 @@
   "devDependencies": {
     "mocha": "^9.1.2",
     "mysql2": "^2.3.0",
-    "selenium-webdriver": "^4.0.0-rc-2"
+    "selenium-webdriver": "^4.0.0-rc-2",
+    "tablefy": "^1.0.3"
   }
 }
