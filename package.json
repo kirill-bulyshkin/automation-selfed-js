@@ -1,0 +1,16 @@
+{
+  "name": "database",
+  "version": "1.0.0",
+  "description": "5th test task",
+  "main": "test.js",
+  "scripts": {
+    "test": "mocha --timeout 100000 ./project"
+  },
+  "author": "Kirill Bulyshkin",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^9.1.2",
+    "mysql2": "^2.3.0",
+    "selenium-webdriver": "^4.0.0-rc-2"
+  }
+}
