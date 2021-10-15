@@ -1,18 +1,12 @@
 const {testData} = require('../testData/test.data');
-const MysqlUtils = require('../framework/utils/mysqlUtils');
+const MysqlUtils = require('../project/mysqlUtils');
+const dbUtils = require('../framework/utils/dbUtils');
+const configsBD = require('../project/configs/configsBD.json');
 
-it('Min time of tests run', async () => {
+it('Checking database', async () => {
+    await dbUtils.getConnection(configsBD.host, configsBD.user, configsBD.database);
     await MysqlUtils.minTestsTime(testData.unit);
-});
-
-it('All projects with amount of the unique tests', async () => {
     await MysqlUtils.amountOfUniqueTests(testData.countOf);
-});
-
-it('All tests from specific date', async () => {
     await MysqlUtils.testsFromDate(testData.dateFrom);
-});
-
-it('Amount of the tests performed on Firefox and Chrome', async () => {
-    await MysqlUtils.testsPerBrowsers(testData.browserOne, testData.browserTwo)
+    await MysqlUtils.testsPerBrowsers(testData.browserOne, testData.browserTwo);
 });

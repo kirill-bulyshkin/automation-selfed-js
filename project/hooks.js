@@ -1,10 +1,5 @@
-const {testData} = require('../testData/test.data');
-const MysqlUtils = require('../framework/utils/mysqlUtils');
+const DBUtils = require('../framework/utils/dbUtils');
 
-beforeEach(async () => {
-    await MysqlUtils.createConnection(testData.host, testData.user, testData.database);
-});
-
-afterEach(async () => {
-    await MysqlUtils.endConnection();
+after(async () => {
+    await DBUtils.endConnection();
 });
