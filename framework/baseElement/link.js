@@ -3,9 +3,9 @@ const Logger = require('../utils/logger');
 
 class Link extends BaseElement {
 
-    async getHref(element) {
-        Logger.infoLog(`Getting link of element ${element}`);
-        await element.getAttribute('href');
+    async getHref() {
+        Logger.infoLog(`Getting link of element`);
+        return (await this.findElement()).getAttribute('href');
     }
 
 }

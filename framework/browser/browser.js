@@ -1,5 +1,3 @@
-// require('chromedriver');
-// require('geckodriver');
 const {Builder, Capabilities} = require('selenium-webdriver');
 const firefox = require('selenium-webdriver/firefox');
 const {testData} = require('../../testData/test.data');
@@ -63,14 +61,15 @@ class Browser {
         return this.driver.switchTo().alert();
     }
 
-    // static async alertAuthenticate(login, password) {
-    //     Logger.infoLog('Alert autentification');
-    //     return (await this.switchToAlert()).authenticateAs(login, password)
-    // }
+    static async getCurrentUrl() {
+        Logger.infoLog('Getting current URL');
+        return this.driver.getCurrentUrl();
+    }
 
-    // static async sleep() {
-    //     return this.driver.sleep(1000)
-    // }
+    static async backToPreviousPage() {
+        Logger.infoLog('Getting to previous page');
+        return this.driver.navigate().back();
+    }
 
 }
 

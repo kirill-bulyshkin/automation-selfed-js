@@ -5,6 +5,7 @@ const testData = {
     'password': 'admin',
     'congratulationsText': 'Congratulations! You must have the proper credentials.',
     'pageIsDisplaying': true,
+    'elementIsDisplaying': true,
     'jsAlertTitle': 'I am a JS Alert',
     'jsConfirmTitle': 'I am a JS Confirm',
     'jsPromptTitle': 'I am a JS prompt',
@@ -13,28 +14,34 @@ const testData = {
     'resultConfirmText': 'You clicked: Ok',
     'randomStringLength': 7,
     resultPromptText: (randomText) => `You entered: ${randomText}`,
-
-    'token': 'ba8efbc9ceb02cfbdeeb54cdb7776afb97943105c7f14a42ce4ff32ddd0b3196de930233af6c29ea1a846',
-    'userId': '627657327',
-    'apiVersion': '5.131',
-    'timeoutValue': 80000,
-    'vkApiLink': 'https://api.vk.com/method/',
-    'randomStringLength': 5,
-    'likesListExt': 1,
-    'firstItem': 0,
-    'expectedLikesCountValue': 1,
-    'filePath': './files/bear.jpg',
-    'pathToUploadedImage': './uploadedFiles/uploadedImage.jpg',
-    'formDataKey': 'photo',
-    'formDataValue': 'bear.jpg',
-    'arrayElement': 0,
-    'sizesElement': 6,
-    'expectedImageDifference': 0
+    'testAlignLeft': 'text-align: left',
+    'timeoutValue': 10000,
+    hoverText: (userNumber) => `name: user${userNumber}`
 };
 
 const path = {
     'basicAuth': '/basic_auth',
-    'alerts': '/javascript_alerts'
+    'alerts': '/javascript_alerts',
+    'slider': '/horizontal_slider',
+    'iframe': '/iframe',
+    'hovers': '/hovers'
 }
 
-module.exports = {testData, path};
+const hoversTestUserNumbers = [1, 3];
+
+const sliderValues = [-60, -50, -30, -20, -10, 0, 10, 20, 30, 50, 60];
+
+const sliderMap = new Map();
+sliderMap.set(-60, '0');
+sliderMap.set(-50, '0.5');
+sliderMap.set(-30, '1');
+sliderMap.set(-20, '1.5');
+sliderMap.set(-10, '2');
+sliderMap.set(0, '2.5');
+sliderMap.set(10, '3');
+sliderMap.set(20, '3.5');
+sliderMap.set(30, '4');
+sliderMap.set(50, '4.5');
+sliderMap.set(60, '5');
+
+module.exports = {testData, path, hoversTestUserNumbers, sliderValues, sliderMap};

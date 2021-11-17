@@ -1,4 +1,5 @@
-const Logger = require ('../utils/logger');
+const Logger = require('../utils/logger');
+const _ = require('lodash');
 
 class RandomGenerators {
 
@@ -19,6 +20,11 @@ class RandomGenerators {
       max = Math.floor(max);
       return Math.floor(Math.random() * (max - min + 1)) + min;
    };
+
+   static getRandomValueFromArray(array) {
+      Logger.infoLog('Getting random value from array');
+      return _.sample(array);
+   }
 
 };
 

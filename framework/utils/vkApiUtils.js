@@ -60,5 +60,4 @@ class VkApiUtils {
     }
 }
 
-
 module.exports = VkApiUtils;

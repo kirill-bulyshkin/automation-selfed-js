@@ -4,8 +4,6 @@ const Button = require('../../framework/baseElement/button');
 const TextArea = require('../../framework/baseElement/textArea');
 const Logger = require('../../framework/utils/logger');
 const Browser = require("../../framework/browser/browser");
-const {until} = require('selenium-webdriver');
-const {testData} = require("../../testData/test.data");
 
 class AlertsPage extends BasePage {
     constructor() {
@@ -14,9 +12,7 @@ class AlertsPage extends BasePage {
     }
 
     get jsAlertButton() {return new Button('jsAlertButton', alertsPageLocators.alertButton);}
-
     get jsConfirmButton() {return new Button('jsConfirmButton', alertsPageLocators.confirmButton);}
-
     get jsPromptButton() {return new Button('jsPromptButton', alertsPageLocators.promptButton);}
 
     async resultTextField() {
@@ -24,10 +20,9 @@ class AlertsPage extends BasePage {
     }
 
     async alertsPageIsDisplayed() {
+        Logger.infoLog('Checking displaying of Alerts page');
         return this.isDisplayed();
     }
-
-    // get myPageButton() {return new Button('myPageButton', navigationBarPageLocators.myPageButton);}
 
     async jsAlertButtonClick() {
         Logger.infoLog('Click on jsAlertButton');
@@ -76,15 +71,7 @@ class AlertsPage extends BasePage {
         Logger.infoLog('Sending keys to alert text field');
         return (await Browser.switchToAlert()).sendKeys(keys);
     }
-
-    // async getSuccessfullAuthText() {
-    //     Logger.infoLog(`Getting text of successfull authorization`);
-    //     return (await this.successfullAuthTextField()).getText();
-    // }
-
-    // async waitingMyPageButton() {
-    //     return Browser.wait(until.elementLocated(navigationBarPageLocators.myPageButton), testData.timeoutValue);
-    // }
+    
 }
 
 module.exports = AlertsPage;

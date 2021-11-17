@@ -5,6 +5,6 @@ beforeEach(async () => {
     await Browser.initBrowser(configs.browserName);
 });
 
-// afterEach(async () => {
-//     await Browser.quit();
-// });
+afterEach(async () => {
+    await Browser.quit();
+});
