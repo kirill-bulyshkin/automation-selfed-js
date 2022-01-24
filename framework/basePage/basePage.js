@@ -15,6 +15,10 @@ class BasePage {
         Logger.infoLog(`Checking displaying of page ${this.uniqueLocator}`);
         return Browser.driver.findElement(this.uniqueLocator).isDisplayed();
     }
+
+    // async getElementsText(locator) {
+    //     return await(this.findElements(locator)).getText();
+    // }
 }
 
 module.exports = BasePage;

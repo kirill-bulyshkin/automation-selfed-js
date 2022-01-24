@@ -25,6 +25,16 @@ class ProjectsPage extends BasePage {
         return (await this._getFooterVersionField()).getText();   
     }
 
+    async _getNexageProjectLink() {
+        Logger.infoLog('Getting Nexage project link');
+        return new Label('nexageProjectLink', projectsPageLocators.nexageProjectLink);
+    }
+
+    async clickNexageProjectLink() {
+        Logger.infoLog('Click on Nexage project link');
+        return (await this._getNexageProjectLink()).click();
+    }
+
 }
 
 module.exports = ProjectsPage;

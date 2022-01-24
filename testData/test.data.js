@@ -5,7 +5,8 @@ const testData = {
     webLink: (login, pass) => `http://${login}:${pass}@localhost:8080/web/`,
     'login': 'login',
     'password': 'password',
-    'footerVersion': 'Version: 2'
+    'footerVersion': 'Version: 2',
+    'nexageProjectId': 1
 };
 
 module.exports = {testData};
