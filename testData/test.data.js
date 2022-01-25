@@ -6,7 +6,12 @@ const testData = {
     'login': 'login',
     'password': 'password',
     'footerVersion': 'Version: 2',
-    'nexageProjectId': 1
+    'nexageProjectId': 1,
+    'randomStringLength': 7,
+    'secondTabInArray': 1,
+    'firstTabInArray': 0,
+    'elementIsDisplaying': true,
+    'nexageProjectName': 'Nexage'
 };
 
 module.exports = {testData};

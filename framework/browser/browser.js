@@ -82,6 +82,27 @@ class Browser {
         Logger.infoLog('Adding cookie');
         return this.driver.manage().addCookie({name:`${name}`, value:`${value}`});
     }
+
+    static async getWindowHandle() {
+        Logger.infoLog('Getting current winow handle');
+        return this.driver.getWindowHandle();
+    }
+
+    static async getAllWindowsHandles() {
+        Logger.infoLog('Getting All windows handles');
+        return this.driver.getAllWindowHandles();
+    }
+
+    static async switchToAnotherTab(tabId) {
+        Logger.infoLog('Switching to another tab');
+        return this.driver.switchTo().window(tabId);
+    }
+
+    static async closeCurrentTab() {
+        Logger.infoLog('Closing the current tab');
+        return this.driver.close();
+    }
+    
 }
 
 module.exports = Browser;

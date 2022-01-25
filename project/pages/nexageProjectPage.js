@@ -10,19 +10,6 @@ class NexageProjectPage extends BasePage {
         return Browser.wait(until.elementLocated(nexageProjectPageLocators.testsStartTimes));
     }
 
-    // async getStartTimes() {
-    //     Logger.infoLog('Getting start times');
-    //     let elements = await this.findElements(nexageProjectPageLocators.testsStartTimes);
-    //     let startTimes = [];
-    //     elements.forEach(function(element, i) {
-    //         // let startTimes = [];
-    //         startTimes.push(element.getText());
-    //         console.log(`${i + 1} StartTime on the page is ${startTimes}`);
-    //         return;
-    //     });
-    //     return console.log(startTimes);
-    // }
-
     async getTestsNamesFromUi() {
         Logger.infoLog('Getting tests names from page');
         let elements = await this.findElements(nexageProjectPageLocators.testsNames);
@@ -42,12 +29,6 @@ class NexageProjectPage extends BasePage {
         };
         return startTimes;
     }
-
-
-    // async getStartTimesFieldsText() {
-    //     Logger.infoLog('Getting start times fields text');
-    //     return await(this._getStartTimesFields());
-    // }
 
 }
 

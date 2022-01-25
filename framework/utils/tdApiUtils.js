@@ -1,6 +1,7 @@
 const Logger = require('./logger');
 const {requests} = require('../../project/requests/requests');
 const axios = require('axios');
+const Browser = require('../browser/browser');
 
 class TDApiUtils {
 
@@ -17,7 +18,9 @@ class TDApiUtils {
             Logger.infoLog('Returned response has JSON format');
             return res;
         } else {
-            Logger.errorLog(`Returned response is NOT in a JSON format`);
+            Logger.errorLog(`Returned response is NOT in a JSON format. Closing browser`);
+            await Browser.quit();
+
         }
     }
 

@@ -1,8 +1,9 @@
 const BasePage = require('../../framework/basePage/basePage');
-const Browser = require('../../framework/browser/browser');
 const Logger = require('../../framework/utils/logger');
 const {projectsPageLocators} = require('../locators/projectsPageLocators');
 const Label = require('../../framework/baseElement/label');
+const Link = require('../../framework/baseElement/link');
+const Button = require('../../framework/baseElement/button');
 
 class ProjectsPage extends BasePage {
     constructor() {
@@ -15,9 +16,21 @@ class ProjectsPage extends BasePage {
         return this.isDisplayed();
     }
 
+    get addProjectButton() {return new Button('addProjectButton', projectsPageLocators.addProjectButton);}
+
     async _getFooterVersionField() {
         Logger.infoLog('Getting footer version field');
         return new Label('footerVersionField', projectsPageLocators.projectsPageFooter);
+    }
+
+    async _getProjectByName(projectName) {
+        Logger.infoLog('Getting project by name');
+        return new Link('projectByName', projectsPageLocators.project(projectName));
+    }
+
+    async projectByNameIsDisplaying(projectName) {
+        Logger.infoLog('Checking displaying of the project by name');
+        return (await this._getProjectByName(projectName)).isElementDisplayed();
     }
 
     async getFooterVersionText() {
@@ -25,14 +38,14 @@ class ProjectsPage extends BasePage {
         return (await this._getFooterVersionField()).getText();   
     }
 
-    async _getNexageProjectLink() {
-        Logger.infoLog('Getting Nexage project link');
-        return new Label('nexageProjectLink', projectsPageLocators.nexageProjectLink);
+    async clickProjectLink(projectName) {
+        Logger.infoLog('Click on Nexage project link');
+        return (await this._getProjectByName(projectName)).click();
     }
 
-    async clickNexageProjectLink() {
-        Logger.infoLog('Click on Nexage project link');
-        return (await this._getNexageProjectLink()).click();
+    async clickAddProjectButton() {
+        Logger.infoLog('Click on Add Project button');
+        return this.addProjectButton.click();
     }
 
 }
