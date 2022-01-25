@@ -25,23 +25,14 @@ it('Test variant 2', async () => {
         expect(await projectsPage.getFooterVersionText()).to.eql(testData.footerVersion);
 
         await projectsPage.clickNexageProjectLink();
-        const testsList = await TDApiUtils.getTestsListInJson(testData.nexageProjectId);
-        const testsNames = [];
-        _.each(testsList, name => testsNames.push(name.name));
-        // console.log(testsNames);
-        
-        // const startTimes = [];
-        // _.each(testsList, startTime => startTimes.push(startTime.startTime));
-        // console.log(startTimes);
-
         const nexageProjectPage = new NexageProjectPage();
         await nexageProjectPage.waitingStartTimesFields();
+        expect(await nexageProjectPage.getStartTimesFromUi()).to.be.sorted({descending: true});
+        const testsNamesFromUi = await nexageProjectPage.getTestsNamesFromUi();
+        const testsListFromApi = await TDApiUtils.getTestsListInJson(testData.nexageProjectId);
+        let testsNamesFromApi = [];
+        _.each(testsListFromApi, name => testsNamesFromApi.push(name.name));
+        expect(testsNamesFromApi).to.include.members(testsNamesFromUi);
 
-        const startTimes = await nexageProjectPage.getStartTimes();
-        expect(startTimes).to.be.sorted({descending: true});
-
-
-
-
-       
+ 
 });
