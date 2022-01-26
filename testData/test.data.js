@@ -11,7 +11,12 @@ const testData = {
     'secondTabInArray': 1,
     'firstTabInArray': 0,
     'elementIsDisplaying': true,
-    'nexageProjectName': 'Nexage'
+    'nexageProjectName': 'Nexage',
+    projectSavedInscription: (projectName) => `Project ${projectName} saved`,
+    'nameToken': 'token',
+    testName: (randomId) => `BKV-${randomId}: kirill_b_test_name_example`,
+    'methodName': 'kirill_b_method_name_example',
+    'randomShortStringLength': 3
 };
 
 module.exports = {testData};

@@ -24,6 +24,15 @@ class TDApiUtils {
         }
     }
 
+    static async createTest(SID, projectName, testName, methodName) {
+        Logger.infoLog('Creating test');
+        const request = requests.createTest(SID, projectName, testName, methodName);
+        Logger.infoLog(`Sending the request ${request}`);
+        const res = (await axios.post(request)).data;
+        Logger.infoLog(`ID of the created test is ${res}`)
+        return res;
+    }
+
 }
 
 module.exports = TDApiUtils;

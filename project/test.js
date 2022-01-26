@@ -10,6 +10,7 @@ const _ = require('lodash');
 const NexageProjectPage = require('./pages/nexageProjectPage');
 const RandomGenerators = require('../framework/utils/randomGenerator');
 const AddProjectPage = require('../project/pages/addProjectPage');
+const NewProjectPage = require('../project/pages/newProjectPage');
 
 
 it('Test variant 2', async () => {
@@ -20,7 +21,7 @@ it('Test variant 2', async () => {
         await Browser.windowMaximize();
         const projectsPage = new ProjectsPage();
         expect(await projectsPage.projectsPageIsDisplayed()).to.be.true;
-        await Browser.addCookie('token', token);
+        await Browser.addCookie(testData.nameToken, token);
         await Browser.refreshPage();
         expect(await projectsPage.getFooterVersionText()).to.eql(testData.footerVersion);
 
@@ -42,11 +43,21 @@ it('Test variant 2', async () => {
         const randomProjectName = RandomGenerators.randomStr(testData.randomStringLength);
         await addProjectPage.setProjectNameValue(randomProjectName);
         await addProjectPage.saveProjectButtonClick();
-        expect(await addProjectPage._getSuccessProjectSavingText()).to.eql(`Project ${randomProjectName} saved`);
+        expect(await addProjectPage._getSuccessProjectSavingText()).to.eql(testData.projectSavedInscription(randomProjectName));
         await Browser.closeCurrentTab();
         expect(await Browser.getAllWindowsHandles()).to.not.include(secondTabId);
         const firstTabId = (await Browser.getAllWindowsHandles())[testData.firstTabInArray];
         await Browser.switchToAnotherTab(firstTabId);
         await Browser.refreshPage();
         expect(await projectsPage.projectByNameIsDisplaying(randomProjectName)).to.eql(testData.elementIsDisplaying);
+
+        await projectsPage.clickProjectLink(randomProjectName);
+        const newProjectPage = new NewProjectPage();
+        let SID = Date.now();
+        const randomTestName = testData.testName(RandomGenerators.randomStr(testData.randomShortStringLength));
+        const createdTestId = (await TDApiUtils.createTest(SID, randomProjectName, randomTestName, testData.methodName));
+        await newProjectPage.waitingCreatedTest(randomTestName);
+        expect(await newProjectPage.testByNameIsDisplaying(randomTestName)).to.eql(testData.elementIsDisplaying);
+        
+
 });
