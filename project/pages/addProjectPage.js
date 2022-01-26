@@ -5,7 +5,6 @@ const TextArea = require('../../framework/baseElement/textArea');
 const Button = require('../../framework/baseElement/button');
 const Label = require('../../framework/baseElement/label');
 
-
 class AddProjectPage extends BasePage {
 
     get addProjectNameField() {return new TextArea('addProjectNameField', addProjectPageLocators.addProjectNameField);}

@@ -102,6 +102,11 @@ class Browser {
         Logger.infoLog('Closing the current tab');
         return this.driver.close();
     }
+
+    static async takeScreenshot() {
+        Logger.infoLog('Taking the screenshot');
+        return this.driver.takeScreenshot();
+    }
     
 }
 

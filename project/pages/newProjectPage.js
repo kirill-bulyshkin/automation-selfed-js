@@ -20,6 +20,12 @@ class NewProjectPage extends BasePage {
         Logger.infoLog('Checking displaying of the created test by name');
         return (await this._getTestByName(testName)).isElementDisplayed();
     }
+    
+    async clickOnCreatedTest(testName) {
+        Logger.infoLog('Clicking on the created test');
+        return (await this._getTestByName(testName)).click();
+    }
+
 }
 
 module.exports = NewProjectPage;

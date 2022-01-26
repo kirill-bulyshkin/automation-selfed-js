@@ -19,8 +19,6 @@ class TDApiUtils {
             return res;
         } else {
             Logger.errorLog(`Returned response is NOT in a JSON format. Closing browser`);
-            await Browser.quit();
-
         }
     }
 
@@ -31,6 +29,33 @@ class TDApiUtils {
         const res = (await axios.post(request)).data;
         Logger.infoLog(`ID of the created test is ${res}`)
         return res;
+    }
+
+    static async sendLogs(logs, testId) {
+        Logger.infoLog('Sending logs');
+        const params = new URLSearchParams();
+        params.append('content', logs);
+        params.append('testId', testId);
+        const config = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        };
+        await axios.post(requests.sendLogs, params, config);
+    }
+
+    static async sendAttach(attach, testId) {
+        Logger.infoLog('Sending attachment');
+        const params = new URLSearchParams();
+        params.append('content', attach);
+        params.append('testId', testId);
+        params.append('contentType', 'image/png');
+        const config = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        };
+        await axios.post(requests.sendAttach, params, config);
     }
 
 }

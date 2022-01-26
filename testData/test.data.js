@@ -16,7 +16,11 @@ const testData = {
     'nameToken': 'token',
     testName: (randomId) => `BKV-${randomId}: kirill_b_test_name_example`,
     'methodName': 'kirill_b_method_name_example',
-    'randomShortStringLength': 3
+    'randomShortStringLength': 3,
+    'pathToLogs': './logs/logs.log',
+    'trueDescending': true,
+    'firstSymbol': 0,
+    'lastSymbol': 20
 };
 
 module.exports = {testData};
