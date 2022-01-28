@@ -1,0 +1,13 @@
+{
+  "name": "avengers-task",
+  "version": "1.0.0",
+  "description": "self-education task",
+  "main": "test.js",
+  "scripts": {
+  },
+  "author": "Kirill Bulyshkin",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^9.3.1"
+  }
+}
