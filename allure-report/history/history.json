@@ -1,0 +1,22 @@
+{
+  "75877a57302f7ebe5773ca2f13bf111f" : {
+    "statistic" : {
+      "failed" : 1,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "8e610f770321f32e",
+      "status" : "failed",
+      "statusDetails" : "Expected 'You logged into a secure area!\n                ×' to contain 'You logged into a secure area!!'.      \n                      actual expected\n                      \n                      'You logged into a secure area!\\n×!!'\n                      ",
+      "time" : {
+        "start" : 1644407003825,
+        "stop" : 1644407008318,
+        "duration" : 4493
+      }
+    } ]
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "uid" : "4b4757e66a1912dae1a509f688f20b0f",
+  "name" : "categories",
+  "children" : [ {
+    "name" : "Product defects",
+    "children" : [ {
+      "name" : "Expected 'You logged into a secure area!\n                ×' to contain 'You logged into a secure area!!'.      \n                      actual expected\n                      \n                      'You logged into a secure area!\\n×!!'\n                      ",
+      "children" : [ {
+        "name" : "should login with valid credentials",
+        "uid" : "8e610f770321f32e",
+        "parentUid" : "8310bb78832f1ecadef0de942f778e68",
+        "status" : "failed",
+        "time" : {
+          "start" : 1644407003825,
+          "stop" : 1644407008318,
+          "duration" : 4493
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "newPassed" : false,
+        "newBroken" : false,
+        "retriesCount" : 13,
+        "retriesStatusChange" : true,
+        "parameters" : [ "chrome-97.0.4692.99" ]
+      } ],
+      "uid" : "8310bb78832f1ecadef0de942f778e68"
+    } ],
+    "uid" : "8fb3a91ba5aaf9de24cc8a92edc82b5d"
+  } ]
+}

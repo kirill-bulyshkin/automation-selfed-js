@@ -1,0 +1,2 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"failed","Wed Feb 09 14:43:23 MSK 2022","Wed Feb 09 14:43:28 MSK 2022","4493","","My Login application","","My Login application","should login with valid credentials","should login with valid credentials","User logs into app with valid credentials"
